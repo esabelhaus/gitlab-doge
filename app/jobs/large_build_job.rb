@@ -1,6 +1,6 @@
 class LargeBuildJob
-  extend Retryable
-  extend Buildable
+  include Sidekiq::Worker
+  include Buildable
 
-  @queue = :low
+  sidekiq_options queue: :low, retry: 10
 end

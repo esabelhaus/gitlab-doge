@@ -1,24 +1,24 @@
 require "fast_spec_helper"
-require "app/models/pull_request"
+require "app/models/merge_request"
 require "app/models/commit"
-require "lib/github_api"
+require "gitlab"
 
-describe PullRequest do
+describe mergeRequest do
   describe "#opened?" do
     context "when payload action is opened" do
       it "returns true" do
-        pull_request = PullRequest.new(payload_stub(action: "opened"))
+        merge_request = mergeRequest.new(payload_stub(action: "opened"))
 
-        expect(pull_request).to be_opened
+        expect(merge_request).to be_opened
       end
     end
 
     context "when payload action is not opened" do
       it "returns false" do
         payload = payload_stub(action: "notopened")
-        pull_request = PullRequest.new(payload)
+        merge_request = mergeRequest.new(payload)
 
-        expect(pull_request).not_to be_opened
+        expect(merge_request).not_to be_opened
       end
     end
   end
@@ -27,30 +27,30 @@ describe PullRequest do
     context "when payload action is synchronize" do
       it "returns true" do
         payload = payload_stub(action: "synchronize")
-        pull_request = PullRequest.new(payload)
+        merge_request = mergeRequest.new(payload)
 
-        expect(pull_request).to be_synchronize
+        expect(merge_request).to be_synchronize
       end
     end
 
     context "when payload action is not synchronize" do
       it "returns false" do
         payload = payload_stub(action: "notsynchronize")
-        pull_request = PullRequest.new(payload)
+        merge_request = mergeRequest.new(payload)
 
-        expect(pull_request).not_to be_synchronize
+        expect(merge_request).not_to be_synchronize
       end
     end
   end
 
   describe "#comments" do
-    it "returns comments on pull request" do
+    it "returns comments on merge request" do
       filename = "spec/models/style_guide_spec.rb"
       comment = double(:comment, position: 7, path: filename)
-      github = double(:github, pull_request_comments: [comment])
-      pull_request = pull_request_stub(github)
+      gitlab = double(:gitlab, merge_request_comments: [comment])
+      merge_request = merge_request_stub(gitlab)
 
-      comments = pull_request.comments
+      comments = merge_request.comments
 
       expect(comments.size).to eq(1)
       expect(comments).to match_array([comment])
@@ -58,18 +58,18 @@ describe PullRequest do
   end
 
   describe "#comment_on_violation" do
-    it "posts a comment to GitHub for the Hound user" do
+    it "posts a comment to gitlab for the Hound user" do
       payload = payload_stub
-      github = double(:github_client, add_pull_request_comment: nil)
-      pull_request = pull_request_stub(github, payload)
+      gitlab = double(:gitlab_client, add_merge_request_comment: nil)
+      merge_request = merge_request_stub(gitlab, payload)
       violation = violation_stub
       commit = double("Commit")
       allow(Commit).to receive(:new).and_return(commit)
 
-      pull_request.comment_on_violation(violation)
+      merge_request.comment_on_violation(violation)
 
-      expect(github).to have_received(:add_pull_request_comment).with(
-        pull_request_number: payload.pull_request_number,
+      expect(gitlab).to have_received(:add_merge_request_comment).with(
+        merge_request_number: payload.merge_request_number,
         commit: commit,
         comment: violation.messages.first,
         filename: violation.filename,
@@ -91,13 +91,13 @@ describe PullRequest do
     defaults = {
       full_repo_name: "org/repo",
       head_sha: "1234abcd",
-      pull_request_number: 5,
+      merge_request_number: 5,
     }
     double("Payload", defaults.merge(options))
   end
 
-  def pull_request_stub(api, payload = payload_stub)
-    allow(GithubApi).to receive(:new).and_return(api)
-    PullRequest.new(payload)
+  def merge_request_stub(api, payload = payload_stub)
+    allow(gitlabApi).to receive(:new).and_return(api)
+    mergeRequest.new(payload)
   end
 end

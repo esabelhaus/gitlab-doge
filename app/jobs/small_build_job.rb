@@ -1,6 +1,6 @@
 class SmallBuildJob
-  extend Retryable
-  extend Buildable
+  include Sidekiq::Worker
+  include Buildable
 
-  @queue = :medium
+  sidekiq_options queue: :medium, retry: 10
 end

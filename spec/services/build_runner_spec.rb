@@ -1,19 +1,19 @@
 require 'spec_helper'
 
 describe BuildRunner, '#run' do
-  context 'with active repo and opened pull request' do
+  context 'with active repo and opened merge request' do
     it 'creates a build record with violations' do
-      repo = create(:repo, :active, github_id: 123)
+      repo = create(:repo, :active, gitlab_id: 123)
       payload = stubbed_payload(
-        github_repo_id: repo.github_id,
-        pull_request_number: 5,
+        gitlab_repo_id: repo.gitlab_id,
+        merge_request_number: 5,
         head_sha: "123abc",
         full_repo_name: repo.name
       )
       build_runner = BuildRunner.new(payload)
       stubbed_style_checker_with_violations
       stubbed_commenter
-      stubbed_pull_request
+      stubbed_merge_request
 
       build_runner.run
       build = Build.first
@@ -21,7 +21,7 @@ describe BuildRunner, '#run' do
       expect(Build.count).to eq 1
       expect(build).to eq repo.builds.last
       expect(build.violations.size).to be >= 1
-      expect(build.pull_request_number).to eq 5
+      expect(build.merge_request_number).to eq 5
       expect(build.commit_sha).to eq payload.head_sha
     end
 
@@ -29,7 +29,7 @@ describe BuildRunner, '#run' do
       build_runner = make_build_runner
       commenter = stubbed_commenter
       style_checker = stubbed_style_checker_with_violations
-      commenter = Commenter.new(stubbed_pull_request)
+      commenter = Commenter.new(stubbed_merge_request)
       allow(Commenter).to receive(:new).and_return(commenter)
 
       build_runner.run
@@ -40,26 +40,26 @@ describe BuildRunner, '#run' do
 
     it 'initializes StyleChecker with modified files and config' do
       build_runner = make_build_runner
-      pull_request = stubbed_pull_request
+      merge_request = stubbed_merge_request
       stubbed_style_checker_with_violations
       stubbed_commenter
 
       build_runner.run
 
-      expect(StyleChecker).to have_received(:new).with(pull_request)
+      expect(StyleChecker).to have_received(:new).with(merge_request)
     end
 
-    it 'initializes PullRequest with payload and Hound token' do
-      repo = create(:repo, :active, github_id: 123)
-      payload = stubbed_payload(github_repo_id: repo.github_id)
+    it 'initializes mergeRequest with payload and Hound token' do
+      repo = create(:repo, :active, gitlab_id: 123)
+      payload = stubbed_payload(gitlab_repo_id: repo.gitlab_id)
       build_runner = BuildRunner.new(payload)
-      stubbed_pull_request
+      stubbed_merge_request
       stubbed_style_checker_with_violations
       stubbed_commenter
 
       build_runner.run
 
-      expect(PullRequest).to have_received(:new).with(payload)
+      expect(mergeRequest).to have_received(:new).with(payload)
     end
   end
 
@@ -75,11 +75,11 @@ describe BuildRunner, '#run' do
     end
   end
 
-  context 'without opened or synchronize pull request' do
+  context 'without opened or synchronize merge request' do
     it 'does not attempt to comment' do
       build_runner = make_build_runner
-      pull_request = stubbed_pull_request
-      allow(pull_request).
+      merge_request = stubbed_merge_request
+      allow(merge_request).
         to receive_messages(opened?: false, synchronize?: false)
       allow(Commenter).to receive(:new)
 
@@ -89,14 +89,14 @@ describe BuildRunner, '#run' do
     end
   end
 
-  def make_build_runner(repo: create(:repo, :active, github_id: 123))
-    payload = stubbed_payload(github_repo_id: repo.github_id)
+  def make_build_runner(repo: create(:repo, :active, gitlab_id: 123))
+    payload = stubbed_payload(gitlab_repo_id: repo.gitlab_id)
     BuildRunner.new(payload)
   end
 
   def stubbed_payload(options = {})
     defaults = {
-      pull_request_number: 123,
+      merge_request_number: 123,
       head_sha: "somesha",
       full_repo_name: "foo/bar"
     }
@@ -118,15 +118,15 @@ describe BuildRunner, '#run' do
     commenter
   end
 
-  def stubbed_pull_request
-    pull_request = double(
-      :pull_request,
-      pull_request_files: [double(:file)],
+  def stubbed_merge_request
+    merge_request = double(
+      :merge_request,
+      merge_request_files: [double(:file)],
       config: double(:config),
       opened?: true
     )
-    allow(PullRequest).to receive(:new).and_return(pull_request)
+    allow(mergeRequest).to receive(:new).and_return(merge_request)
 
-    pull_request
+    merge_request
   end
 end

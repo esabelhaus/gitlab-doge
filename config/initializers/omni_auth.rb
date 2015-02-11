@@ -1,7 +1,9 @@
+
+
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider(
     :gitlab,
-    :site => 'http://git.dev.fwmrm.net/',
+    :site => ENV.fetch("GITLAB_URL"),
     :v => 'v3'
   )
 end

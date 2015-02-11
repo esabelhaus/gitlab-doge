@@ -44,10 +44,18 @@ class Payload
   end
 
   def merge_request
+    puts '!'*80
+    puts @merge_request.inspect
+    puts data.fetch("object_attributes", {}).inspect
     @merge_request ||= data.fetch("object_attributes", {})
   end
 
   def repository
+    #puts '!'*80
+    #puts @repository.inspect
+    #puts @repository['name']
+    #puts merge_request["target"]['namespace']
+    #puts merge_request["target"]['name']
     @repository ||= merge_request["target"]
   end
 end
