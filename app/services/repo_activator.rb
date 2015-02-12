@@ -32,7 +32,7 @@ class RepoActivator
   end
 
   def add_hound_to_repo
-    gitlab_userid = ENV.fetch("HOUND_GITLAB_USERID")
+    gitlab_userid = ENV.fetch("DOGE_GITLAB_USERID")
     gitlab.add_team_member(repo.gitlab_id, gitlab_userid, 30) # 30 means DEVELOPER
   end
 

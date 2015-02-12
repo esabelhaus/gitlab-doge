@@ -65,7 +65,7 @@ class MergeRequest
   end
 
   def api
-    @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => ENV['HOUND_GITLAB_TOKEN'])
+    @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => ENV['DOGE_GITLAB_TOKEN'])
   end
 
   def merge_request_diffs

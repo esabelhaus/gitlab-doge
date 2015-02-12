@@ -1,15 +1,15 @@
 development: &default
   adapter: postgresql
   encoding: unicode
-  database: hound_development
+  database: doge_development
   username: <%= ENV['DATABASE_USER']%>
   password: <%= ENV['DATABASE_PASSWORD']%>
   pool: 5
 
 production:
   <<: *default
-  database: hound_production
+  database: doge_production
 
 test:
   <<: *default
-  database: hound_test
+  database: doge_test

@@ -12,3 +12,6 @@ before_script:
 services:
   - redis-server
 
+addons:
+  code_climate:
+    repo_token: d5fa8e4ebe4bfa49f4bff04ec7df746f1ea95c983dbf84e32197302f274ce56c

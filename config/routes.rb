@@ -1,4 +1,4 @@
-Houndapp::Application.routes.draw do
+Dogeapp::Application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => "/queue"
 
