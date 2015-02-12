@@ -1,32 +1,48 @@
 Hound-GitLab
 =====
 
-[![Build Status](https://travis-ci.org/larrylv/hound-gitlab.svg?branch=master)](http://travis-ci.org/larrylv/hound-gitlab?branch=master)
-[![Code Climate](https://codeclimate.com/github/larrylv/hound-gitlab.png)](https://codeclimate.com/github/larrylv/hound-gitlab)
+[![Build Status](https://travis-ci.org/e-sabelhaus/gitlab-doge.svg?branch=master)](http://travis-ci.org/e-sabelhaus/gitlab-doge?branch=master)
+[![Code Climate](https://codeclimate.com/github/e-sabelhaus/gitlab-doge.png)](https://codeclimate.com/github/e-sabelhaus/gitlab-doge)
 
-This project is originally a fork of [Hound](https://github.com/thoughtbot/hound) by thoughtbot,
-and aims to support code reviews for GitLab.
+This project is originally a fork of [Hound](https://github.com/thoughtbot/hound) by thoughtbot, and once more
+from [larrylv/hound-gitlab](https://github.com/larrylv/hound-gitlab).
 
-Hound-GitLab reviews GitLab merge requests for style guide violations. [View the style
+gitlab-doge reviews GitLab merge requests (and soon pushes) for style guide violations. [View the style
 guide &rarr;](https://github.com/thoughtbot/guides/tree/master/style)
 
-## Configure Hound-GitLab on Your Local Development Environment
+## Configure gitLab-doge on Your Local Development Environment
 
 1. After cloning the repository, run the setup script `./bin/setup`
 2. Log into your Gitlab account and go to the [Account Page](https://gitlab.com/profile/account).
 3. Copy the `Private token` to HOUND_GITLAB_TOKEN in `.env`, and then fetch your userid
-   with that token for HOUND_GITLAB_USERID(this is tricky, I know...) in .env file.
-   Note the setup script copies `.sample.env` to `.env` for you, if the
-   file does not exist.
-4. Edit `GITLAB_ENDPOINT` and `HOST` in .env file.
-5. Run `foreman start`. Foreman will start the web server, `redis-server`, and
-   the resque background job queue.
+   with that token for HOUND_GITLAB_USERID in .env file.
+
+   3.a This can be performed through your browser by simply browsing to http(s)://gitlab.example.com/api/v3/users?search=[your user name]
+
+   3.b Note the setup script copies `.sample.env` to `.env` for you, if the file does not exist.
+4. Edit the following in the .env file:
+```
+	DATABASE_USERNAME
+	DATABASE_PASSWORD
+	GITLAB_URL [base gitlab url, no trailing slash]
+	GITLAB_ENDPOINT
+	HOST
+	WEB_CONCURRENCY [I recommend 1 for development]
+```
+5. Be certain that you have a redis server running locally at port 6379
+6. Run `foreman start`. Foreman will start the web server and sidekiq
+
+  6.a keep in mind, sidekiq will quit gracefully, so if you need to terminate the process just run a `kill -9` on whatever pid  is in tmp/pids/sidekiq.pid
 
 Testing
 -----------
 
 1. Set up your `development` environment as per above.
 2. Run `rake` to execute the full test suite.
+
+***
+The tests need to me rewritten, YMMV for now
+***
 
 Contributing
 ------------
