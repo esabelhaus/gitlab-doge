@@ -14,14 +14,10 @@ class BuildsController < ApplicationController
   end
 
   def build_job_class
-    puts '@'*80
     LargeBuildJob
   end
 
   def payload
-    puts '#'*80
-    puts @payload.inspect
-    puts Payload.new(params).inspect
     @payload ||= Payload.new(params)
   end
 end
