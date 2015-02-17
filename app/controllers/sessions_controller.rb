@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
   end
 
   def gitlab_username
-    request.env["omniauth.auth"]["info"]["nickname"]
+    request.env["omniauth.auth"]["info"]["common_name"]
   end
 
   def gitlab_email_address
@@ -46,6 +46,8 @@ class SessionsController < ApplicationController
   end
 
   def gitlab_token
-    request.env["omniauth.auth"]["credentials"]["token"]
+    return 'some_random_key'
+    #request.env["omniauth.auth"]["credentials"]["token"]
+    GitLabDB.find(where: {email: gitlab_email_address})
   end
 end

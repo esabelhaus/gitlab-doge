@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     unless signed_in?
-      redirect_to root_path
+      redirect_to '/auth/dice'
     end
   end
 
