@@ -8,16 +8,14 @@
         Review your JavaScript, CoffeeScript, and Ruby code
         for style guide violations
         with a trusty hound.
-    = link_to '/auth/gitlab', class: 'auth button' do
+    = link_to '/auth/dice', class: 'auth button' do
       %i.fa.fa-github
       %span= t('authenticate')
 
   %li.step.step-activate
     %h3 Activate Repos
     %p
-      Tell Hound which GitHub repos to watch.
-      Private repos are $12 each per month.
-      Public repos are free.
+      Tell Hound which Gitlab repos to watch.
     %figure
       = image_tag('landing/step-activate.png')
 
@@ -38,7 +36,7 @@
       = image_tag('landing/step-comment.png')
 
   %li.step.cta
-    = link_to '/auth/github', class: 'auth button' do
+    = link_to '/auth/dice', class: 'auth button' do
       %i.fa.fa-github
       %span= t('authenticate')
 

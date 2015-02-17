@@ -1,0 +1,21 @@
+#Rails.application.config.middleware.use OmniAuth::Builder do
+#  provider(
+#    :gitlab,
+#    :site => ENV.fetch("GITLAB_URL"),
+#    :v => 'v3'
+#  )
+#end
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :dice, {
+    cas_server:          'https://pki.adv.di2e.net:3001',
+    authentication_path: '/dn',
+    primary_visa:        'NOFORN',
+    dnc_options: { :transformation => 'downcase' }, # see `dnc` gem for all options
+    ssl_config: {
+      ca_file:     "#{ENV['HOME']}/certificates/ADV.new/CA.ADV.all.pem",
+      client_cert: "#{ENV['HOME']}/certificates/ADV.new/steven.haddox/steven.haddox.pem",
+      client_key:  "#{ENV['HOME']}/certificates/ADV.new/steven.haddox/steven.haddox.np.key"
+    }
+  }
+end

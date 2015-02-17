@@ -16,9 +16,10 @@ gem "jshintrb"
 gem "neat"
 gem "newrelic_rpm"
 gem "gitlab", "3.2.0"
-gem "omniauth-gitlab", :git => "https://github.com/larrylv/omniauth-gitlab.git"
+gem "omniauth-dice", "~> 0.1"
 gem "paranoia", "~> 2.0"
 gem "pg"
+gem "rb-readline"
 gem "rails", "4.1.5"
 #gem "resque", "~> 1.22.0"
 #gem "resque-retry"
@@ -37,6 +38,7 @@ group :staging, :production do
 end
 
 group :development, :test do
+  gem "awesome_print"
   gem "byebug"
   gem "foreman"
   gem "konacha"
