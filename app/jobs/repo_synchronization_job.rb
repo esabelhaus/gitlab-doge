@@ -1,6 +1,5 @@
 class RepoSynchronizationJob
   include Sidekiq::Worker
-  sidekiq_options queue: :high, retry: 10
 
   def before_enqueue(user_id, gitlab_token)
     user = User.find(user_id)
@@ -13,4 +12,6 @@ class RepoSynchronizationJob
     synchronization.start
     user.update_attribute(:refreshing_repos, false)
   end
+
+    sidekiq_options queue: :high, retry: 10
 end

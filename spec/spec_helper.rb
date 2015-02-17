@@ -3,10 +3,6 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'fast_spec_helper'
 require 'config/environment'
 require 'rspec/rails'
-require "codeclimate-test-reporter"
-
-
-CodeClimate::TestReporter.start
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -14,7 +10,6 @@ RSpec.configure do |config|
   config.before do
     DatabaseCleaner.clean
   end
-
   config.infer_base_class_for_anonymous_controllers = false
   config.infer_spec_type_from_file_location!
   config.include AuthenticationHelper
@@ -23,7 +18,6 @@ RSpec.configure do |config|
   config.include OauthHelper
   config.include FactoryGirl::Syntax::Methods
   DatabaseCleaner.strategy = :deletion
-  Resque.inline = true
 end
 
 Capybara.configure do |config|

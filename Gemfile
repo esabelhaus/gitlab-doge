@@ -58,4 +58,6 @@ group :test do
   gem "shoulda-matchers"
   gem "webmock"
   gem "codeclimate-test-reporter"
+  gem "octokit"
+  gem "rspec-sidekiq"
 end

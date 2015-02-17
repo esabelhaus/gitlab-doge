@@ -3,6 +3,7 @@ require 'app/jobs/buildable'
 require 'app/models/payload'
 require 'app/services/build_runner'
 
+
 describe Buildable do
   class TestJob
     extend Buildable
@@ -23,14 +24,14 @@ describe Buildable do
       expect(build_runner).to have_received(:run)
     end
 
-    it 'retries when Resque::TermException is raised' do
-      allow(Payload).to receive(:new).and_raise(Resque::TermException.new(1))
-      allow(Resque).to receive(:enqueue)
-      payload_data = double(:payload_data)
-
-      TestJob.perform(payload_data)
-
-      expect(Resque).to have_received(:enqueue).with(TestJob, payload_data)
-    end
+    # it 'retries when Resque::TermException is raised' do
+    #   allow(Payload).to receive(:new).and_raise(Resque::TermException.new(1))
+    #   allow(Resque).to receive(:enqueue)
+    #   payload_data = double(:payload_data)
+    #
+    #   TestJob.perform(payload_data)
+    #
+    #   expect(Resque).to have_received(:enqueue).with(TestJob, payload_data)
+    # end
   end
 end
