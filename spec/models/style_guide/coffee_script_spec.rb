@@ -66,7 +66,7 @@ describe StyleGuide::CoffeeScript do
         spy_on_file_read
         config_file = thoughtbot_configuration_file(StyleGuide::CoffeeScript)
 
-        violations_in("var foo = 'bar'", repository_owner: "thoughtbot")
+        violations_in("var foo = 'bar'")
 
         expect(File).to have_received(:read).
           with(config_file)
@@ -81,7 +81,7 @@ describe StyleGuide::CoffeeScript do
         spy_on_file_read
         config_file = default_configuration_file(StyleGuide::CoffeeScript)
 
-        violations_in("var foo = 'bar'", repository_owner: "not_thoughtbot")
+        violations_in("var foo = 'bar'")
 
         expect(File).to have_received(:read).
           with(config_file)
@@ -92,9 +92,9 @@ describe StyleGuide::CoffeeScript do
 
     private
 
-    def violations_in(content, repository_owner: "ralph")
+    def violations_in(content)
       repo_config = double("RepoConfig", enabled_for?: true, for: {})
-      style_guide = StyleGuide::CoffeeScript.new(repo_config, repository_owner)
+      style_guide = StyleGuide::CoffeeScript.new(repo_config)
       style_guide.violations_in_file(build_file(content)).flat_map(&:messages)
     end
 

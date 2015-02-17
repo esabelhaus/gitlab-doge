@@ -3,11 +3,11 @@ require "app/models/merge_request"
 require "app/models/commit"
 require "gitlab"
 
-describe mergeRequest do
+describe MergeRequest do
   describe "#opened?" do
     context "when payload action is opened" do
       it "returns true" do
-        merge_request = mergeRequest.new(payload_stub(action: "opened"))
+        merge_request = MergeRequest.new(payload_stub(action: "opened"))
 
         expect(merge_request).to be_opened
       end
@@ -16,7 +16,7 @@ describe mergeRequest do
     context "when payload action is not opened" do
       it "returns false" do
         payload = payload_stub(action: "notopened")
-        merge_request = mergeRequest.new(payload)
+        merge_request = MergeRequest.new(payload)
 
         expect(merge_request).not_to be_opened
       end
@@ -27,7 +27,7 @@ describe mergeRequest do
     context "when payload action is synchronize" do
       it "returns true" do
         payload = payload_stub(action: "synchronize")
-        merge_request = mergeRequest.new(payload)
+        merge_request = MergeRequest.new(payload)
 
         expect(merge_request).to be_synchronize
       end
@@ -36,7 +36,7 @@ describe mergeRequest do
     context "when payload action is not synchronize" do
       it "returns false" do
         payload = payload_stub(action: "notsynchronize")
-        merge_request = mergeRequest.new(payload)
+        merge_request = MergeRequest.new(payload)
 
         expect(merge_request).not_to be_synchronize
       end
@@ -98,6 +98,6 @@ describe mergeRequest do
 
   def merge_request_stub(api, payload = payload_stub)
     allow(gitlabApi).to receive(:new).and_return(api)
-    mergeRequest.new(payload)
+    MergeRequest.new(payload)
   end
 end

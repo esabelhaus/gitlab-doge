@@ -5,7 +5,7 @@ module ConfigurationHelper
 
   def thoughtbot_configuration_file(style_guide_class)
     File.join(
-      DefaultConfigFile::THOUGHTBOT_CONFIG_DIR,
+      DefaultConfigFile::CONFIG_DIR,
       style_guide_class::DEFAULT_CONFIG_FILENAME
     )
   end

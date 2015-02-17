@@ -60,4 +60,5 @@ group :test do
   gem "codeclimate-test-reporter"
   gem "octokit"
   gem "rspec-sidekiq"
+  gem "sentry-raven"
 end

@@ -264,6 +264,10 @@ GEM
     sawyer (0.5.4)
       addressable (~> 2.3.5)
       faraday (~> 0.8, < 0.10)
+    sentry-raven (0.9.4)
+      faraday (>= 0.7.6)
+      hashie (>= 1.1.0)
+      uuidtools
     shoulda-matchers (2.6.2)
       activesupport (>= 3.0.0)
     sidekiq (2.17.0)
@@ -315,6 +319,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uuidtools (2.1.5)
     web-console (2.0.0)
       activemodel (~> 4.0)
       binding_of_caller (>= 0.7.2)
@@ -369,6 +374,7 @@ DEPENDENCIES
   rspec-sidekiq
   rubocop (~> 0.27.0)
   sass-rails (~> 4.0.2)
+  sentry-raven
   shoulda-matchers
   sidekiq
   sidekiq-failures

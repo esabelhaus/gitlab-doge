@@ -1,4 +1,3 @@
-require "attr_extras"
 require "fast_spec_helper"
 require "app/models/style_guide/base"
 require "app/models/style_guide/unsupported"

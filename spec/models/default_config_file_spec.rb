@@ -9,7 +9,7 @@ describe DefaultConfigFile do
           DefaultConfigFile::CONFIG_DIR,
           "javascript.json"
         )
-        config = DefaultConfigFile.new("javascript.json", "not_thoughtbot")
+        config = DefaultConfigFile.new("javascript.json")
 
         expect(config.path).to eq config_path
       end
@@ -18,10 +18,10 @@ describe DefaultConfigFile do
     context "non-thoughtbot repository" do
       it "returns the default hound configuration" do
         config_path = File.join(
-          DefaultConfigFile::THOUGHTBOT_CONFIG_DIR,
+          DefaultConfigFile::CONFIG_DIR,
           "javascript.json"
         )
-        config = DefaultConfigFile.new("javascript.json", "thoughtbot")
+        config = DefaultConfigFile.new("javascript.json")
 
         expect(config.path).to eq config_path
       end

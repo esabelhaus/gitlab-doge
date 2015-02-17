@@ -16,12 +16,12 @@ describe StyleChecker, "#violations" do
   it "returns a collection of computed violations" do
     stylish_file = stub_commit_file("good.rb", "def good; end")
     violated_file = stub_commit_file("bad.rb", "def bad( a ); a; end  ")
-    pull_request =
-      stub_pull_request(pull_request_files: [stylish_file, violated_file])
+    merge_request =
+      stub_merge_request(merge_request_files: [stylish_file, violated_file])
     expected_violations =
-      ['Space inside parentheses detected.', 'Trailing whitespace detected.']
+      ['Avoid single-line method definitions.', 'Trailing whitespace detected.']
 
-    violation_messages = StyleChecker.new(pull_request).violations.
+    violation_messages = StyleChecker.new(merge_request).violations.
       flat_map(&:messages)
 
     expect(violation_messages).to eq expected_violations
@@ -31,9 +31,9 @@ describe StyleChecker, "#violations" do
     context "with violations" do
       it "returns violations" do
         file = stub_commit_file("ruby.rb", "puts 123    ")
-        pull_request = stub_pull_request(pull_request_files: [file])
+        merge_request = stub_merge_request(merge_request_files: [file])
 
-        violations = StyleChecker.new(pull_request).violations
+        violations = StyleChecker.new(merge_request).violations
         messages = violations.flat_map(&:messages)
 
         expect(messages).to eq ["Trailing whitespace detected."]
@@ -43,9 +43,9 @@ describe StyleChecker, "#violations" do
     context "with violation on unchanged line" do
       it "returns no violations" do
         file = stub_commit_file("foo.rb", "'wrong quotes'", UnchangedLine.new)
-        pull_request = stub_pull_request(pull_request_files: [file])
+        merge_request = stub_merge_request(merge_request_files: [file])
 
-        violations = StyleChecker.new(pull_request).violations
+        violations = StyleChecker.new(merge_request).violations
 
         expect(violations.count).to eq 0
       end
@@ -54,9 +54,9 @@ describe StyleChecker, "#violations" do
     context "without violations" do
       it "returns no violations" do
         file = stub_commit_file("ruby.rb", "puts 123")
-        pull_request = stub_pull_request(pull_request_files: [file])
+        merge_request = stub_merge_request(merge_request_files: [file])
 
-        violations = StyleChecker.new(pull_request).violations
+        violations = StyleChecker.new(merge_request).violations
         messages = violations.flat_map(&:messages)
 
         expect(messages).to be_empty
@@ -74,12 +74,12 @@ describe StyleChecker, "#violations" do
           YAML
           head_commit = double("Commit", file_content: config)
           file = stub_commit_file("test.coffee", "foo: ->")
-          pull_request = stub_pull_request(
+          merge_request = stub_merge_request(
             head_commit: head_commit,
-            pull_request_files: [file],
+            merge_request_files: [file],
           )
 
-          violations = StyleChecker.new(pull_request).violations
+          violations = StyleChecker.new(merge_request).violations
           messages = violations.flat_map(&:messages)
 
           expect(messages).to eq ["Empty function"]
@@ -94,12 +94,12 @@ describe StyleChecker, "#violations" do
           YAML
           head_commit = double("Commit", file_content: config)
           file = stub_commit_file("test.coffee", "alert 'Hello World'")
-          pull_request = stub_pull_request(
+          merge_request = stub_merge_request(
             head_commit: head_commit,
-            pull_request_files: [file],
+            merge_request_files: [file],
           )
 
-          violations = StyleChecker.new(pull_request).violations
+          violations = StyleChecker.new(merge_request).violations
 
           expect(violations).to be_empty
         end
@@ -115,12 +115,12 @@ describe StyleChecker, "#violations" do
           YAML
           head_commit = double("Commit", file_content: config)
           file = stub_commit_file("test.coffee", "alert('Hello World')")
-          pull_request = stub_pull_request(
+          merge_request = stub_merge_request(
             head_commit: head_commit,
-            pull_request_files: [file],
+            merge_request_files: [file],
           )
 
-          violations = StyleChecker.new(pull_request).violations
+          violations = StyleChecker.new(merge_request).violations
 
           expect(violations).to be_empty
         end
@@ -138,12 +138,12 @@ describe StyleChecker, "#violations" do
           YAML
           head_commit = double("Commit", file_content: config)
           file = stub_commit_file("test.js", "var test = 'test'")
-          pull_request = stub_pull_request(
+          merge_request = stub_merge_request(
             head_commit: head_commit,
-            pull_request_files: [file],
+            merge_request_files: [file],
           )
 
-          violations = StyleChecker.new(pull_request).violations
+          violations = StyleChecker.new(merge_request).violations
           messages = violations.flat_map(&:messages)
 
           expect(messages).to include "Missing semicolon."
@@ -158,12 +158,12 @@ describe StyleChecker, "#violations" do
           YAML
           head_commit = double("Commit", file_content: config)
           file = stub_commit_file("test.js", "var test = 'test'")
-          pull_request = stub_pull_request(
+          merge_request = stub_merge_request(
             head_commit: head_commit,
-            pull_request_files: [file],
+            merge_request_files: [file],
           )
 
-          violations = StyleChecker.new(pull_request).violations
+          violations = StyleChecker.new(merge_request).violations
 
           expect(violations).to be_empty
         end
@@ -179,12 +179,12 @@ describe StyleChecker, "#violations" do
           YAML
           head_commit = double("Commit", file_content: config)
           file = stub_commit_file("test.js", "var test = 'test';")
-          pull_request = stub_pull_request(
+          merge_request = stub_merge_request(
             head_commit: head_commit,
-            pull_request_files: [file],
+            merge_request_files: [file],
           )
 
-          violations = StyleChecker.new(pull_request).violations
+          violations = StyleChecker.new(merge_request).violations
           messages = violations.flat_map(&:messages)
 
           expect(messages).not_to include "Missing semicolon."
@@ -206,12 +206,12 @@ describe StyleChecker, "#violations" do
         )
 
         file = stub_commit_file("test.js", "var test = 'test'")
-        pull_request = stub_pull_request(
+        merge_request = stub_merge_request(
           head_commit: head_commit,
-          pull_request_files: [file]
+          merge_request_files: [file]
         )
 
-        violations = StyleChecker.new(pull_request).violations
+        violations = StyleChecker.new(merge_request).violations
 
         expect(violations).to be_empty
       end
@@ -221,34 +221,22 @@ describe StyleChecker, "#violations" do
   context "with unsupported file type" do
     it "uses unsupported style guide" do
       file = stub_commit_file("fortran.f", %{PRINT *, "Hello World!"\nEND})
-      pull_request = stub_pull_request(pull_request_files: [file])
+      merge_request = stub_merge_request(merge_request_files: [file])
 
-      violations = StyleChecker.new(pull_request).violations
+      violations = StyleChecker.new(merge_request).violations
 
       expect(violations).to eq []
     end
   end
 
-  context "a removed file" do
-    it "does not return a violation for the file" do
-      file = stub_commit_file("ruby.rb", "puts 123    ", removed: true)
-      pull_request = stub_pull_request(pull_request_files: [file])
-
-      violations = StyleChecker.new(pull_request).violations
-      messages = violations.flat_map(&:messages)
-
-      expect(messages).to eq []
-    end
-  end
-
   private
 
-  def stub_pull_request(options = {})
+  def stub_merge_request(options = {})
     head_commit = double("Commit", file_content: "")
     defaults = {
       file_content: "",
       head_commit: head_commit,
-      pull_request_files: [],
+      merge_request_files: [],
       repository_owner: "some_org"
     }
 

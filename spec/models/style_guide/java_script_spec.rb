@@ -68,7 +68,7 @@ describe StyleGuide::JavaScript do
         file = double(:file, content: "$(myGlobal).hide();").as_null_object
         repo_config = double("RepoConfig", for: {})
 
-        violations_in(file, repo_config, repository_owner: "not_thoughtbot")
+        violations_in(file, repo_config)
 
         expect(File).to have_received(:read).with(configuration_file_path)
         expect(Jshintrb).to have_received(:lint).
@@ -86,7 +86,7 @@ describe StyleGuide::JavaScript do
         )
         repo_config = double("RepoConfig", for: {})
 
-        violations_in(file, repo_config, repository_owner: "thoughtbot")
+        violations_in(file, repo_config)
 
         expect(File).to have_received(:read).with(configuration_file_path)
         expect(Jshintrb).to have_received(:lint).
@@ -99,7 +99,7 @@ describe StyleGuide::JavaScript do
     context "file is in excluded file list" do
       it "returns false" do
         repo_config = double("RepoConfig", ignored_javascript_files: ["foo.js"])
-        style_guide = StyleGuide::JavaScript.new(repo_config, "ralph")
+        style_guide = StyleGuide::JavaScript.new(repo_config)
         file = double(:file, filename: "foo.js")
 
         included = style_guide.file_included?(file)
@@ -111,7 +111,7 @@ describe StyleGuide::JavaScript do
     context "file is not excluded" do
       it "returns true" do
         repo_config = double("RepoConfig", ignored_javascript_files: ["foo.js"])
-        style_guide = StyleGuide::JavaScript.new(repo_config, "ralph")
+        style_guide = StyleGuide::JavaScript.new(repo_config)
         file = double(:file, filename: "bar.js")
 
         included = style_guide.file_included?(file)
@@ -126,7 +126,7 @@ describe StyleGuide::JavaScript do
         ignored_javascript_files: ["app/assets/javascripts/*.js"]
       )
 
-      style_guide = StyleGuide::JavaScript.new(repo_config, "ralph")
+      style_guide = StyleGuide::JavaScript.new(repo_config)
       file = double(:file, filename: "app/assets/javascripts/bar.js")
 
       included = style_guide.file_included?(file)
@@ -135,8 +135,8 @@ describe StyleGuide::JavaScript do
     end
   end
 
-  def violations_in(file, repo_config, repository_owner: "not_thoughtbot")
-    style_guide = StyleGuide::JavaScript.new(repo_config, repository_owner)
+  def violations_in(file, repo_config)
+    style_guide = StyleGuide::JavaScript.new(repo_config)
     style_guide.violations_in_file(file)
   end
 
