@@ -19,7 +19,7 @@ describe StyleChecker, "#violations" do
     merge_request =
       stub_merge_request(merge_request_files: [stylish_file, violated_file])
     expected_violations =
-      ['Avoid single-line method definitions.', 'Trailing whitespace detected.']
+      ['Unnecessary spacing detected.', 'Space inside parentheses detected.', 'Trailing whitespace detected.']
 
     violation_messages = StyleChecker.new(merge_request).violations.
       flat_map(&:messages)
@@ -36,7 +36,8 @@ describe StyleChecker, "#violations" do
         violations = StyleChecker.new(merge_request).violations
         messages = violations.flat_map(&:messages)
 
-        expect(messages).to eq ["Trailing whitespace detected."]
+        expect(messages).to eq ['Unnecessary spacing detected.',
+                                            'Trailing whitespace detected.']
       end
     end
 
@@ -153,10 +154,14 @@ describe StyleChecker, "#violations" do
       context "with JavaScript disabled" do
         it "returns no violations" do
           config = <<-YAML.strip_heredoc
-            java_script:
-              enabled: false
+          java_script:
+            ignore_file: '.jshintignore'
           YAML
-          head_commit = double("Commit", file_content: config)
+
+          head_commit = stub_head_commit(
+            ".hound.yml" => config,
+            ".jshintignore" => "test.js"
+          )
           file = stub_commit_file("test.js", "var test = 'test'")
           merge_request = stub_merge_request(
             head_commit: head_commit,

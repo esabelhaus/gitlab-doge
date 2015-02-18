@@ -68,7 +68,9 @@ end
 
     describe "for is_* method name" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Rename `is_something?` to `something?`."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 def is_something?
   "something"
 end
@@ -79,19 +81,17 @@ end
     describe "when using detect" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-users.detect do |user|
-  user.active?
-end
+users.detect(&:active?)
         CODE
       end
     end
 
     describe "when using find" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-users.find do |user|
-  user.active?
-end
+        violations = ["Prefer `detect` over `find`."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+users.find(&:active?)
         CODE
       end
     end
@@ -99,19 +99,17 @@ end
     describe "when using select" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-users.select do |user|
-  user.active?
-end
+users.select(&:active?)
         CODE
       end
     end
 
     describe "when using find_all" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-users.find_all do |user|
-  user.active?
-end
+        violations = ["Prefer `select` over `find_all`."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+users.find_all(&:active?)
         CODE
       end
     end
@@ -119,19 +117,17 @@ end
     describe "when using map" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-users.map do |user|
-  user.name
-end
+users.map(&:active?)
         CODE
       end
     end
 
     describe "when using collect" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-users.collect do |user|
-  user.name
-end
+        violations = ["Prefer `map` over `collect`."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+users.collect(&:active?)
         CODE
       end
     end
@@ -148,8 +144,10 @@ end
 
     describe "when using reduce" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-users.reduce(0) do |result, user|
+        violations = ["Prefer `inject` over `reduce`."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+users.reduce(0) do |_, user|
   user.age
 end
         CODE
@@ -158,35 +156,45 @@ end
 
     context "for long line" do
       it "returns violation" do
-        expect(violations_in("a" * 81)).not_to be_empty
+        violations = ["Line is too long. [81/80]"]
+
+        expect(violations_in("a" * 81 + "\n")).to eq violations
       end
     end
 
     context "for trailing whitespace" do
       it "returns violation" do
-        expect(violations_in("one = 1   ")).not_to be_empty
+        violations = ["Trailing whitespace detected."]
+
+        expect(violations_in("[1, 2].sum \n")).to eq violations
       end
     end
 
     context "for spaces after (" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-puts( "test")
+        violations = ["Space inside parentheses detected."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+logger( "test")
         CODE
       end
     end
 
     context "for spaces before )" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-puts("test" )
+        violations = ["Space inside parentheses detected."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+logger("test" )
         CODE
       end
     end
 
     context "for spaces before ]" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Space inside square brackets detected."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 a["test" ]
         CODE
       end
@@ -194,7 +202,9 @@ a["test" ]
 
     context "for private methods indented more than public methods" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Inconsistent indentation detected."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 def one
   1
 end
@@ -210,19 +220,23 @@ private
 
     context "for leading dot used for multi-line method chain" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Place the . on the previous line, together with the "\
+                      "method call receiver."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 one
   .two
-  .three
         CODE
       end
     end
 
     context "for tab indentation" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Use 2 (not 1) spaces for indentation.", "Tab detected."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 def test
-\tputs "test"
+\tlogger "test"
 end
         CODE
       end
@@ -230,7 +244,9 @@ end
 
     context "for two methods without newline separation" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Use empty lines between defs."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 def one
   1
 end
@@ -243,23 +259,30 @@ end
 
     context "for operator without surrounding spaces" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-two = 1+1
+        violations = ["Surrounding space missing for operator '+'."]
+        expect(violations_in(<<-CODE)).to eq violations
+1+1
         CODE
       end
     end
 
     context "for comma without trailing space" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-puts :one,:two
+        violations = ["Space missing after comma."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+logger :one,:two
         CODE
       end
     end
 
     context "for colon without trailing space" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Space missing after colon.",
+                      "Space inside { missing.",
+                      "Space inside } missing."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 {one:1}
         CODE
       end
@@ -267,32 +290,44 @@ puts :one,:two
 
     context "for semicolon without trailing space" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
-puts :one;puts :two
+        violations = ["Do not use semicolons to terminate expressions.",
+                      "Space missing after semicolon."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+logger :one;logger :two
         CODE
       end
     end
 
     context "for opening brace without leading space" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Surrounding space missing for operator '='."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 a ={ one: 1 }
+a
         CODE
       end
     end
 
     context "for opening brace without trailing space" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Space inside { missing."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 a = {one: 1 }
+a
         CODE
       end
     end
 
     context "for closing brace without leading space" do
       it "returns violations" do
-        expect(violations_in(<<-CODE)).not_to be_empty
+        violations = ["Space inside } missing."]
+
+        expect(violations_in(<<-CODE)).to eq violations
 a = { one: 1}
+a
         CODE
       end
     end
@@ -376,8 +411,7 @@ end
     it "finds only one violation" do
       config = {
         "StringLiterals" => {
-          "EnforcedStyle" => "double_quotes",
-          "Enabled" => "true",
+          "EnforcedStyle" => "double_quotes"
         }
       }
 
@@ -428,6 +462,74 @@ end
 
         expect(violations).to be_empty
       end
+
+      it 'allows a cop to be excluded for specific files or directories' do
+        config = {
+          "StringLiterals" => {
+            "EnforcedStyle" => "single_quotes"
+          },
+          "HashSyntax" => {
+            "Exclude" => ["lib/**/*"]
+          }
+        }
+
+        violations = violations_with_config(config)
+
+        expect(violations).to eq [
+          "Use the new Ruby 1.9 hash syntax.",
+          "Prefer single-quoted strings when you don't need string "\
+          "interpolation or special symbols."
+        ]
+      end
+    end
+
+    context "with using block" do
+      it "returns violations" do
+        violations = ["Pass `&:name` as an argument to `map` "\
+                      "instead of a block."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+users.map do |user|
+  user.name
+end
+        CODE
+      end
+    end
+
+    context "with calls debugger" do
+      it "returns violations" do
+        violations = ["Remove debugger entry point `binding.pry`."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+binding.pry
+        CODE
+      end
+    end
+
+    context "with empty lines around block" do
+      it "returns violations" do
+        violations = ["Extra empty line detected at block body beginning.",
+                      "Extra empty line detected at block body end."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+block do |hoge|
+
+  hoge
+
+end
+        CODE
+      end
+    end
+
+    context "with unnecessary space" do
+      it "returns violations" do
+        violations = ["Unnecessary spacing detected."]
+
+        expect(violations_in(<<-CODE)).to eq violations
+hoge  = "https://github.com/bbatsov/rubocop"
+hoge
+        CODE
+      end
     end
 
     def violations_with_config(config)
@@ -463,49 +565,53 @@ end
   end
 
   context "thoughtbot organization PR" do
-    it "uses the thoughtbot configuration for rubocop" do
-      spy_on_rubocop_team
-      spy_on_rubocop_configuration_loader
-      config_file = thoughtbot_configuration_file(StyleGuide::Ruby)
-      code = <<-CODE
-        private def foo
-          bar
-        end
-      CODE
-
-      thoughtbot_violations_in(code)
-
-      expect(RuboCop::ConfigLoader).to have_received(:configuration_from_file).
-        with(config_file)
-
-      expect(RuboCop::Cop::Team).to have_received(:new).
-        with(anything, thoughtbot_configuration, anything)
-    end
-
-    describe "when using reduce" do
-      it "returns no violations" do
-        expect(thoughtbot_violations_in(<<-CODE)).to eq []
-          users.reduce(0) do |sum, user|
-            sum + user.age
-          end
-        CODE
-      end
-    end
-
-    describe "when using inject" do
-      it "returns violations" do
-        expect(thoughtbot_violations_in(<<-CODE)).not_to be_empty
-          users.inject(0) do |result, user|
-            user.age
-          end
-        CODE
-      end
-    end
-
-    def thoughtbot_violations_in(content)
-      violations_in(content)
-    end
+    pending("thoughtbot config is not implemented in gitlab-doge")
+    # it "uses the thoughtbot configuration for rubocop" do
+    #   spy_on_rubocop_team
+    #   spy_on_rubocop_configuration_loader
+    #   config_file = thoughtbot_configuration_file(StyleGuide::Ruby)
+    #   code = <<-CODE
+    #     private def foo
+    #       bar
+    #     end
+    #   CODE
+    #
+    #   thoughtbot_violations_in(code)
+    #
+    #   expect(RuboCop::ConfigLoader).to have_received(:configuration_from_file).
+    #     with(config_file)
+    #
+    #   expect(RuboCop::Cop::Team).to have_received(:new).
+    #     with(anything, thoughtbot_configuration, anything)
+    # end
+    #
+    # describe "when using reduce" do
+    #   it "returns no violations" do
+    #     expect(thoughtbot_violations_in(<<-CODE)).to eq []
+    #       users.reduce(0) do |sum, user|
+    #         sum + user.age
+    #       end
+    #     CODE
+    #   end
+    # end
+    #
+    # describe "when using inject" do
+    #   it "returns violations" do
+    #     violations = ["Prefer `reduce` over `inject`."]
+    #
+    #     expect(thoughtbot_violations_in(<<-CODE)).to eq violations
+    #       users.inject(0) do |_, user|
+    #         user.age
+    #       end
+    #     CODE
+    #   end
+    # end
+    #
+    # def thoughtbot_violations_in(content)
+    #   violations_in(content, repository_owner_name: "thoughtbot")
+    # end
   end
+
 
   private
 
@@ -525,10 +631,10 @@ end
     RuboCop::ConfigLoader.configuration_from_file(config_file)
   end
 
-  def thoughtbot_configuration
-    config_file = thoughtbot_configuration_file(StyleGuide::Ruby)
-    RuboCop::ConfigLoader.configuration_from_file(config_file)
-  end
+  # def thoughtbot_configuration
+  #   config_file = thoughtbot_configuration_file(StyleGuide::Ruby)
+  #   RuboCop::ConfigLoader.configuration_from_file(config_file)
+  # end
 
   def spy_on_rubocop_team
     allow(RuboCop::Cop::Team).to receive(:new).and_call_original
