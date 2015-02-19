@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141212054824) do
+ActiveRecord::Schema.define(version: 20150219193725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20141212054824) do
     t.string   "remember_token",                   null: false
     t.boolean  "refreshing_repos", default: false
     t.string   "email_address"
+    t.string   "dn"
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree

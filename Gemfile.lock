@@ -164,6 +164,7 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    mysql2 (0.3.17)
     neat (1.5.1)
       bourbon (>= 3.1)
       sass (~> 3.2.19)
@@ -369,6 +370,7 @@ DEPENDENCIES
   jshintrb
   konacha
   launchy
+  mysql2
   neat
   newrelic_rpm
   omniauth

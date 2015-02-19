@@ -6,6 +6,15 @@ development: &default
   password: <%= ENV['DATABASE_PASSWORD']%>
   pool: 5
 
+gitlab:
+  adapter: <%= ENV['GITLAB_DATABASE_ADAPTER']%>
+  database: <%= ENV['GITLAB_DATABASE_NAME']%>
+  host: <%= ENV['GITLAB_DATABASE_HOST']%>
+  port: <%= ENV['GITLAB_DATABASE_PORT']%>
+  username: <%= ENV['GITLAB_DATABASE_USER']%>
+  password: <%= ENV['GITLAB_DATABASE_PASSWORD']%>
+  pool: 5
+
 production:
   <<: *default
   database: doge_production

@@ -32,15 +32,20 @@ class SessionsController < ApplicationController
   def create_user
     user = User.create!(
       gitlab_username: gitlab_username,
-      email_address: gitlab_email_address
+      email_address: gitlab_email_address,
+      dn: auth_hash['uid']
     )
     flash[:signed_up] = true
     user
   end
 
+  def extern_uid
+    auth_hash['extra']['raw_info']['uid']
+  end
+
   def create_session_for(user)
     session[:remember_token] = user.remember_token
-    session[:gitlab_token] = gitlab_token
+    session[:gitlab_token] = GitlabToken.new(extern_uid).token
   end
 
   def destroy_session
@@ -53,12 +58,5 @@ class SessionsController < ApplicationController
 
   def gitlab_email_address
     auth_hash["info"]["email"]
-  end
-
-  def gitlab_token
-    return 'some_random_key'
-    # FIXME ^^^^
-    #auth_hash["credentials"]["token"]
-    GitLabDB.find(where: {email: gitlab_email_address})
   end
 end
