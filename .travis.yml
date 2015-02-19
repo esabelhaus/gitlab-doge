@@ -1,17 +1,25 @@
 language: ruby
 cache: bundler
 rvm: 2.1.5
-
 before_install:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 before_script:
-  - psql -c 'create database "hound_test";' -U postgres
-
+- psql -c 'create database "hound_test";' -U postgres
 services:
-  - redis-server
-
+- redis-server
 addons:
   code_climate:
-    repo_token: 'd5fa8e4ebe4bfa49f4bff04ec7df746f1ea95c983dbf84e32197302f274ce56c'
+    repo_token: d5fa8e4ebe4bfa49f4bff04ec7df746f1ea95c983dbf84e32197302f274ce56c
+env:
+  global:
+  - secure: P01MlG4xQmJYjPGNMC0/ATx9DGXE2io9bQzpXXNOvbMFaCD1Dv2MBleWfh4HqmFz+O1YaUkQhrucA/V8ZV105NUbpkEGvZQh8Z43b1kK8dfz5ZuG0938KWS6O5+oibT9Gv5V+fph7kijicsGFQ4vaBF085ZRQ/DuZLoE2PxCdeo=
+  - secure: hf6dkekxRQNRTTm0sThHtt+YBeFcYw5bD5ORJUF4MSUcw0G1gAGnshlFO5pWbsb/BMLPqLZ7LWSpzffrGHL28kXaIKGzYr/y+UJ8X/mkuAnm+JvDTkbsdyDeSDa1/8YkIrx1E4vSFOEbVaao5LkCU6Nshn5fkanET9Mu7TWKPwM=
+  - secure: YlfWzrmVZxui08lG+CPa2RLnlDjFf5GyK5s3Dwg1DuC0XpUyqBUhEne+ytUS+VCQq1oRhKO7/Yk/NgG3+p6I8Is2hCE8R/NR/94MT6+qmpSHMZJq0RfpGOMaGoSWRQxLUfHNnbG8dMvWbzlMg2L9EqO/BOM1ERpkzyb+pRNEZHc=
+  - secure: ylorO8Iy1V3/xGMlS4xnl3LD8OKLKNS9EN2tgOJ3rIuygfWdHqO9x/pbxRfjYrhwm3EJxlzE1oplsSFEMPvjGsZJtpoQTd3fTsJeN53TH8lYlXpU3prUe5dWDRKDuIya2l7X6sj0nNYi9ZyEqZ0NjfTqYYVQaHyocqMeilaI/Ic=
+  - secure: QGd59wXceKmZOo3WFa+FSBku9ufqojuYXaYPhvqfkEz/O07UslLwxY2VUvTAlFx2vKKa1WlMh8zyGEpcB07QSdlY+Q/dv/DbO7sV7dqkFso09pl7IUFvNmJRZa/fFa1XbZ+e6tgUncFv0yImaBvVqd4S1nQA+UzwcM8+OTLNEfo=
+  - secure: FWh4r2FncUR+8uEv3v9r0kibfiNaaxpdVwHBPYmp0JRhG7bpYQpmcxKkkyEQe6kLLr97Mu24S259QJ+AB+sKhJWkkzex6GR5IUX3uR2bgRD2ak63D3dGN8HI0XWBG45n5tV6iV4gDaE6zUxBNisNrwjb54lGnzAn9H5rg03tSug=
+  - secure: CE2aC5zJpQ4UX3AXLf+K7lqeupt91EVs6sa29H8C4LoTlwjnjyIZSjY1fPLuW/X3cbINaT+tVXSN9zOakaOsm8qrRu+T5SGElqrmxNpeG7/sj2mzUfJjoPG9MwdWDVOrmTq5aXEOXDXewSBLpgodG+QBaJ+4QUiIc7epOLatmQM=
+  - secure: HXSf+IMr7ItAC7dI01CdRaDqlXZ8vdRczKigbmVkwc0x7zaB1suZJZkR6g3LXHAbbpexTyVK8/FOi8XQvOaK2ZO5ORsLQ1bQ4H3EJCf2nZFmwm6hc6geETxcpF0+dEdQfEdJm2ytmvoty3IIL0mykfH6WOO7+xqaI+Ql0jGMSTc=
+  - secure: nBZCtALBsAU/DX/S15HdAMbmiOKvBZghcC2tHb7H6Xdy7FaamhGfrY2qUFikVPeHeLQIyEt7QNLnor4fSWI/T2/yFKPyWPMRo9N+gKV24ESofQSS4kDUWshp+JimhHUMHlA/7c2eeFo7s8T7wFzo+eLrlxML165iNfsL+OiURZA=
+  - secure: UUOKXIIgTIqqBFKB8QNWDIVjaMHNK1JG720+EWirZLmePk++ljBS3ldKwILHR4D22l6dhTUhkH7rypdbckCrOGUyAlk+fvGVhhMDxBDUpyr5qHoDQB7njDPYCnggtQcRlpTBwBdKl2qx+hE/CdD+zJaawEQTjYWyDugU1NtPJLk=
