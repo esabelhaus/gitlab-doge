@@ -1,7 +1,7 @@
 require "fast_spec_helper"
 require "app/models/merge_request"
 require "app/models/commit"
-require "gitlab"
+require "gitlab_monkey_patch"
 
 describe MergeRequest do
   describe "#opened?" do
