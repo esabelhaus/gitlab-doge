@@ -371,6 +371,7 @@ DEPENDENCIES
   launchy
   neat
   newrelic_rpm
+  omniauth
   omniauth-dice (~> 0.1)
   paranoia (~> 2.0)
   pg

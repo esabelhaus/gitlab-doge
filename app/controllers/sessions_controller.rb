@@ -1,9 +1,11 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate, only: [:create]
+  skip_before_action :authenticate, only: [:create, :destroy]
   skip_before_filter :verify_authenticity_token, only: :create
 
   def create
+    @omniauth = request.env['omniauth.auth'].to_hash
     user = find_user || create_user
+    reset_session
     create_session_for(user)
     redirect_to repos_path
   end
@@ -13,7 +15,15 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
+  def failure
+    flash.now[:error] = "OmniAuth authentication failed."
+  end
+
   private
+
+  def auth_hash
+    request.env['omniauth.auth']
+  end
 
   def find_user
     User.where(gitlab_username: gitlab_username).first
@@ -34,20 +44,21 @@ class SessionsController < ApplicationController
   end
 
   def destroy_session
-    session[:remember_token] = nil
+    reset_session
   end
 
   def gitlab_username
-    request.env["omniauth.auth"]["info"]["common_name"]
+    auth_hash["info"]["common_name"]
   end
 
   def gitlab_email_address
-    request.env["omniauth.auth"]["info"]["email"]
+    auth_hash["info"]["email"]
   end
 
   def gitlab_token
     return 'some_random_key'
-    #request.env["omniauth.auth"]["credentials"]["token"]
+    # FIXME ^^^^
+    #auth_hash["credentials"]["token"]
     GitLabDB.find(where: {email: gitlab_email_address})
   end
 end
