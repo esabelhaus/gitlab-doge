@@ -9,7 +9,7 @@ describe Patch do
       patch = Patch.new(patch_body)
 
       expect(patch.changed_lines.size).to eq(3)
-      expect(patch.changed_lines.map(&:number)).to eq [14, 22, 54]
+      expect(patch.changed_lines.map(&:number)).to eq [14, 22, 53]
       expect(patch.changed_lines.map(&:patch_position)).to eq [5, 13, 37]
     end
 

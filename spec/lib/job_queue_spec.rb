@@ -1,15 +1,20 @@
 require 'fast_spec_helper'
 require 'lib/job_queue'
 
+class JobClass
+  include Sidekiq::Worker
+end
+
+Sidekiq::Testing.fake!
+
 describe JobQueue do
   describe '.push' do
-    it 'enqueues a Resque job' do
-      job_class = double(:job_class)
-      allow(Resque).to receive(:enqueue)
-
-      JobQueue.push(job_class, 1, 2, 3)
-
-      expect(Resque).to have_received(:enqueue).with(job_class, 1, 2, 3)
+    it 'pushes a job to sidekiq worker' do
+      payload = double(:payload)
+      
+      expect {
+      JobQueue.push(JobClass, payload)
+      }.to change(JobClass.jobs, :size).by(1)
     end
   end
 end
