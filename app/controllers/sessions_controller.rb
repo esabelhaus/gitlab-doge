@@ -45,13 +45,27 @@ class SessionsController < ApplicationController
     auth_hash['uid'].to_s.gsub(/[^a-zA-Z0-9_\.-]/, "_").force_encoding("utf-8")
   end
 
-  def create_session_for(user)
-    session[:remember_token] = user.remember_token
-    session[:gitlab_token] = gitlab_token #user.gitlab_token
+
+  #auth_hash['extern_uid']
+  def gitlab_token
+    GitlabToken.new(auth_hash['extern_uid']).token
   end
 
-  def gitlab_token
-    GitlabToken.new(extern_uid).token
+  def my_gitlab_token
+    token = user_gitlab_token
+    g = Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => token)
+    @my_gitlab_token = this_token
+  rescue
+    @my_gitlab_token = gitlab_token
+  end
+
+  def user_gitlab_token
+    User.where(gitlab_username: gitlab_username).gitlab_token
+  end
+
+  def create_session_for(user)
+    session[:remember_token] = user.remember_token
+    session[:gitlab_token] = my_gitlab_token
   end
 
   def destroy_session
