@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
     return read_attribute(:gitlab_token)
   rescue
     logger.info "Gitlab token expired, updating Gitlab API token"
-    write_attribute(:gitlab_token, GitlabToken.new(gitlab_username).token)
+    write_attribute(:gitlab_token, GitlabToken.new(dn).token)
     read_attribute(:gitlab_token)
   end
 

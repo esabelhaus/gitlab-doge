@@ -33,11 +33,15 @@ class SessionsController < ApplicationController
     user = User.create!(
       gitlab_username: gitlab_username,
       email_address: gitlab_email_address,
-      dn: auth_hash['uid'],
-      gitlab_token: GitlabToken.new(gitlab_username).token
+      dn: user_dn,
+      gitlab_token: GitlabToken.new(user_dn).token
     )
     flash[:signed_up] = true
     user
+  end
+
+  def user_dn
+    auth_hash['info']['dn'] || auth_hash['uid']
   end
 
   def create_session_for(user)
@@ -51,7 +55,8 @@ class SessionsController < ApplicationController
 
   def gitlab_username
     # Gitlab username derived from DN
-    auth_hash['uid'].to_s.gsub(/[^a-zA-Z0-9_\.-]/, "_").force_encoding("utf-8")
+    auth_hash['info']['name'].to_s.gsub(/[^a-zA-Z0-9_\.-]/, "_")
+    .force_encoding("utf-8")
   end
 
   def gitlab_email_address
