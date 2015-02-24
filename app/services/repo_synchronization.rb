@@ -17,8 +17,6 @@ class RepoSynchronization
 
   def start
     user.repos.clear
-    user.update_token
-
     api.projects.each do |resource|
       attributes = repo_attributes(resource.to_hash)
       user.repos << Repo.find_or_create_with(attributes)
