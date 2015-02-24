@@ -5,11 +5,11 @@
 %main.content-doc
   %h2 Frequently Asked Questions
 
-  %h3 Why isn't Hound commenting on my pull request?
+  %h3 Why isn't Doge commenting on my merge request?
   %ul.debug-hound-not-working
     %li.debug-steps
-      Note that Hound only comments when he finds a style violation. Ensure
-      that changes made in your pull request actually contain style guide
+      Note that Doge only comments when he finds a style violation. Ensure
+      that changes made in your merge request actually contain style guide
       violations.
     %li.debug-steps
       Alternatively, tools like RuboCop and JSHint can be used to
@@ -22,23 +22,18 @@
     %li.debug-steps
       Be sure your PR is of a manageable size. The Github API has access
       limits which can affect the number of violations reported. Anecdotally,
-      we've seen pull requests with more than 250 changed files get incomplete
+      we've seen merge requests with more than 250 changed files get incomplete
       responses.
 
-  %h3 Why doesn't Hound list a repo on which I'm a collaborator?
+  %h3 Why doesn't Doge list a repo on which I'm a member?
   %p
-    Only GitHub repository owners can enable Hound for style guide reviews.
-  %p
-    For more information, see GitHub's documentation on permission levels for
-    = link_to('organization repos', 'https://help.github.com/articles/permission-levels-for-an-organization-repository/')
-    and
-    = link_to('user account repos.', 'https://help.github.com/articles/permission-levels-for-a-user-account-repository/')
+    Only Gitlab repository managers can enable Doge for style guide reviews.
 
-  %h3 How secure is my code now that Hound has access?
+  %h3 How secure is my code now that Doge has access?
   %p
     Please see our
     = link_to('security page.',
-      'https://github.com/thoughtbot/hound/blob/master/doc/SECURITY.md')
+      "#{ENV['SOURCE_URL']}/blob/master/doc/SECURITY.md")
 
   %h3 Do you offer a trial subscription?
   %p
@@ -46,7 +41,7 @@
     out on open-sourced repos first, since these can be enabled free of charge.
 
 
-  %h3 Can I have Hound check my entire repository for style?
+  %h3 Can I have Doge check my entire repository for style?
   %p
     No, and we don't recommend doing so. Our rule is "Don't rewrite existing
     code to follow the style guide." See the
@@ -66,16 +61,8 @@
     = link_to('Rubocop', 'https://github.com/bbatsov/rubocop')
     locally.
 
-  %h3 Do you offer GitHub Enterprise support?
+  %h3 How do I unsubscribe from Doge?
   %p
-    Not at the current time. A user has shared their method of getting it to
-    work
-    = link_to('here in this GitHub issue',
-      'https://github.com/thoughtbot/hound/issues/426')
-    but it is an not officially supported approach.
-
-  %h3 How do I unsubscribe from Hound?
-  %p
-    If you are no longer satisfied with Hound, you can cancel your subscription
-    by disabling your repo on
+    If you no longer wish for Doge to lint your repo, you can cancel your
+    subscription by disabling your repo on
     = link_to('the repo page.', repos_path)

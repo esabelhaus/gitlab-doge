@@ -22,8 +22,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    unless signed_in?
-      redirect_to root_path
+    unless request.env['omniauth.auth'] || signed_in?
+      redirect_to '/auth/dice'
     end
   end
 

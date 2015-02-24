@@ -13,5 +13,5 @@ class RepoSynchronizationJob
     user.update_attribute(:refreshing_repos, false)
   end
 
-    sidekiq_options queue: :high, retry: 10
+  sidekiq_options queue: :high, retry: 10
 end

@@ -1,3 +1,5 @@
+require 'gitlab_monkey_patch'
+
 class RepoActivator
   def initialize(gitlab_token:, repo:)
     @gitlab_token = gitlab_token
@@ -37,7 +39,10 @@ class RepoActivator
   end
 
   def gitlab
-    @gitlab ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => gitlab_token)
+    @gitlab ||= Gitlab.client(
+               endpoint: ENV['GITLAB_ENDPOINT'],
+               private_token: gitlab_token
+              )
   end
 
   HOOK_OPTIONS = {

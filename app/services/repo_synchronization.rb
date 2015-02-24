@@ -1,3 +1,4 @@
+require 'gitlab_monkey_patch'
 class RepoSynchronization
   ORGANIZATION_TYPE = 'Organization'
 
@@ -5,12 +6,14 @@ class RepoSynchronization
   attr_reader :user
 
   def api
-    @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'], :private_token => gitlab_token)
+    @api ||= Gitlab.client(
+               endpoint: ENV['GITLAB_ENDPOINT'],
+               private_token: gitlab_token
+             )
   end
 
   def start
     user.repos.clear
-
     api.projects.each do |resource|
       attributes = repo_attributes(resource.to_hash)
       user.repos << Repo.find_or_create_with(attributes)
