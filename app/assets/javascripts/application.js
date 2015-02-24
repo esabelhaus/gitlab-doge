@@ -3,7 +3,7 @@
 //= require_self
 //= require_tree .
 
-App = angular.module('Hound', ['ngResource']);
+App = angular.module('Doge', ['ngResource']);
 
 App.config(['$httpProvider', function($httpProvider) {
   $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
