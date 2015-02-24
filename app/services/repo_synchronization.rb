@@ -7,11 +7,11 @@ class RepoSynchronization
   def api
     @api ||= Gitlab.client(
                endpoint: ENV['GITLAB_ENDPOINT'],
-               private_token: gitlab_token,
-               httparty: {
-                 ssl_ca_file: ENV['SSL_CA_FILE_PATH'],
-                 pem: ENV['SSL_UNIFIED_CLIENT_CERT']
-               }
+               private_token: gitlab_token
+              # httparty: {
+              #   ssl_ca_file: ENV['SSL_CA_FILE_PATH'],
+              #   pem: ENV['SSL_UNIFIED_CLIENT_CERT']
+              # }
              )
   end
 
