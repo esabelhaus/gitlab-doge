@@ -1,40 +1,41 @@
-- content_for :page_title, "Hound"
+- content_for :page_title, "Doge"
 
-= image_tag('landing/HoundLogo.svg', class: 'logo')
+= render 'shared/header'
+= image_tag('landing/logo_doge_c.png', class: 'logo')
 %ol.getting-started
   %li.step.pitch
     .tagline
       %h2
         Review your JavaScript, CoffeeScript, and Ruby code
         for style guide violations
-        with a trusty hound.
+        with a trusty doge.
+  - unless signed_in?
     = link_to '/auth/dice', class: 'auth button' do
-      %i.fa.fa-github
       %span= t('authenticate')
 
   %li.step.step-activate
     %h3 Activate Repos
     %p
-      Tell Hound which Gitlab repos to watch.
+      Tell Doge which Gitlab repos to watch.
     %figure
       = image_tag('landing/step-activate.png')
 
   %li.step.step-code
-    %h3 Commit &amp; Create Pull Request
+    %h3 Commit &amp; Create Merge Request
     %p
       Write and commit code as you normally would then
-      open a pull request to get reviewed by Hound.
+      open a merge request to get reviewed by Doge.
     %figure
       = image_tag('landing/step-code.png')
 
   %li.step.step-comment
-    %h3 View Hound Comments
+    %h3 View Doge Comments
     %p
-      Hound will review your pull request and make inline comments on
+      Doge will review your merge request and make comments on
       any style guide violations.
     %figure
       = image_tag('landing/step-comment.png')
-
+- unless signed_in?
   %li.step.cta
     = link_to '/auth/dice', class: 'auth button' do
       %i.fa.fa-github

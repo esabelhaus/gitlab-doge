@@ -1,8 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic&subset=latin,latin-ext);
+
 $sans-serif: "Lato", sans-serif;
 $serif: "Georgia", serif;
 
 $green: rgb(82, 228, 93);
-$purple: rgb(168, 115, 209);
+$purple: rgb(245, 157, 76);
 $red: #c32f34;
 $teal: #379a75;
 
@@ -11,9 +13,9 @@ $active-color: $teal;
 $repo-list-toggle-size: 1.5rem;
 
 $base-border-color: rgb(220,220,220);
-$base-font-color: rgb(97, 110, 124);
-$light-font-color: rgb(153, 171, 192);
-$medium-font-color: rgb(139, 152, 167);
+$base-font-color: rgb(91, 91, 91);
+$light-font-color: rgb(47, 79, 79);
+$medium-font-color: rgb(91, 91, 91);
 
 $icon-font: "FontAwesome";
 $icon-dropdown: '\f0d7';
