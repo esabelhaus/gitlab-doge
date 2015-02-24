@@ -1,3 +1,4 @@
+require 'gitlab_monkey_patch'
 class RepoSynchronization
   ORGANIZATION_TYPE = 'Organization'
 
