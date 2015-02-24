@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby "2.1.5"
 
 gem "active_model_serializers"
+gem 'activerecord-session_store'
 gem "angularjs-rails"
 gem "attr_extras"
 gem "bourbon"
@@ -13,16 +14,17 @@ gem "haml-rails"
 gem "high_voltage"
 gem "jquery-rails"
 gem "jshintrb"
+#This is here in the event your exernal gitlab db is mysql
+gem "mysql2"
 gem "neat"
 gem "newrelic_rpm"
 gem "gitlab", "3.2.0"
-gem "omniauth-gitlab", :git => "https://github.com/larrylv/omniauth-gitlab.git"
+gem "omniauth"
+gem "omniauth-dice", "~> 0.1"
 gem "paranoia", "~> 2.0"
 gem "pg"
+gem "rb-readline"
 gem "rails", "4.1.5"
-#gem "resque", "~> 1.22.0"
-#gem "resque-retry"
-#gem "resque-sentry"
 gem "sinatra"
 gem "sidekiq"
 gem "sidekiq-failures"
@@ -37,6 +39,7 @@ group :staging, :production do
 end
 
 group :development, :test do
+  gem "awesome_print"
   gem "byebug"
   gem "foreman"
   gem "konacha"

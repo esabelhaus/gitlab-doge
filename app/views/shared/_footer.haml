@@ -1,23 +1,27 @@
 %footer.app-footer
   %p
-    Hound is maintained by #{link_to 'thoughtbot', 'http://thoughtbot.com'}.
-    Questions? Try the
-    #{link_to 'FAQ', faq_path} or
-    Tweet #{link_to '@houndci', 'https://twitter.com/houndci'}.
+    Gitlab-Doge is maintained by #{link_to 'Eric Sabelhaus', 'https://github.com/e-sabelhaus'} and
+    #{link_to 'Steven Haddox', 'https://github.com/e-sabelhaus'}
 
   %p
-    Hound is Copyright &copy; #{Date.today.year} thoughtbot. It is open source
-    software and may be redistributed under the terms specified in the
-    #{link_to 'LICENSE', 'https://github.com/thoughtbot/hound/blob/master/LICENSE'}.
+    Questions? Try the #{link_to 'FAQ', faq_path}
+
+  %p
+    Gitlab-Doge is open source software and may be redistributed under the terms specified in the
+    #{link_to 'LICENSE', "#{ENV['SOURCE_URL']}/blob/master/LICENSE"}.
+
+  %p
+    Gitlab-Doge is forked from #{link_to 'Hound', 'https://github.com/thoughtbot/hound'}. Many thanks to
+    the awesome developers at Thoughtbot who initially developed Hound!
 
   %ul.links
     %li
-      = link_to "Source Code", "https://github.com/thoughtbot/hound"
+      = link_to "Source Code", "#{ENV['SOURCE_URL']}"
     %li
       = link_to "FAQ", faq_path
     %li
-      = link_to "Terms", "https://github.com/thoughtbot/hound/blob/master/doc/TERMS.md"
+      = link_to "Terms", "#{ENV['SOURCE_URL']}/blob/master/doc/TERMS.md"
     %li
-      = link_to "Privacy", "https://github.com/thoughtbot/hound/blob/master/doc/PRIVACY.md"
+      = link_to "Privacy", "#{ENV['SOURCE_URL']}/blob/master/doc/PRIVACY.md"
     %li
-      = link_to "Security", "https://github.com/thoughtbot/hound/blob/master/doc/SECURITY.md"
+      = link_to "Security", "#{ENV['SOURCE_URL']}/blob/master/doc/SECURITY.md"
