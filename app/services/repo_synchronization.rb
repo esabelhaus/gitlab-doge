@@ -5,17 +5,19 @@ class RepoSynchronization
   attr_reader :user
 
   def api
-    @api ||= Gitlab.client(:endpoint => ENV['GITLAB_ENDPOINT'],
-                          :private_token => gitlab_token,
-                          :httparty => {
-                                        :ssl_ca_file => ENV['SSL_CA_FILE_PATH'],
-                                        :pem => ENV['SSL_UNIFIED_CLIENT_CERT']
-                                       }
-                          )
+    @api ||= Gitlab.client(
+               endpoint: ENV['GITLAB_ENDPOINT'],
+               private_token: gitlab_token,
+               httparty: {
+                 ssl_ca_file: ENV['SSL_CA_FILE_PATH'],
+                 pem: ENV['SSL_UNIFIED_CLIENT_CERT']
+               }
+             )
   end
 
   def start
     user.repos.clear
+    user.update_token
 
     api.projects.each do |resource|
       attributes = repo_attributes(resource.to_hash)

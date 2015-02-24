@@ -27,8 +27,6 @@ class SessionsController < ApplicationController
 
   def find_user
     user = User.where(gitlab_username: gitlab_username).first
-    user.update_token if user
-    user
   end
 
   def create_user

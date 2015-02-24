@@ -23,13 +23,23 @@ class User < ActiveRecord::Base
     repos.where("private IS NULL").count > 0
   end
 
-  def update_token
-    logger.debug "Verifying access to API"
-    Gitlab.client(endpoint: ENV['GITLAB_ENDPOINT'], private_token: gitlab_token)
+  def gitlab_token
+    get_current_token # Ensure we always have a current token when invoking
+  end
+
+  # Verify connectivity to Gitlab API with current token
+  # If token isn't valid, retrieve updated token
+  # Return the valid token
+  def get_current_token
+    Gitlab.client(
+      endpoint: ENV['GITLAB_ENDPOINT'],
+      private_token: read_attribute(:gitlab_token)
+    ).user # Invoke a call to the API to ensure we raise if token is invalid
+    return read_attribute(:gitlab_token)
   rescue
-    logger.debug "Gitlab token expired, updating Gitlab API token"
-    gitlab_token = GitlabToken.new(gitlab_username).token
-    save
+    logger.info "Gitlab token expired, updating Gitlab API token"
+    write_attribute(:gitlab_token, GitlabToken.new(gitlab_username).token)
+    read_attribute(:gitlab_token)
   end
 
   private
