@@ -1,0 +1,19 @@
+- content_for :page_title, "Authentication Failure - Doge"
+= render 'shared/header'
+
+%p
+  = image_tag('landing/logo_doge_c.png', class: 'logo')
+  Wow, much fail.
+
+%h3 Authentication Error:
+%h4
+  = params[:message].titleize
+
+- if Dogeapp::Application.config.log_level == 'debug'
+  %p
+    %hr
+    Request Environment Dump:
+    %br
+      = debug request.env
+
+= render 'shared/footer'
