@@ -98,14 +98,14 @@ GEM
       dotenv (= 0.11.1)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    excon (0.44.2)
+    excon (0.44.3)
     execjs (2.2.1)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
-    faraday (0.9.0)
+    faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
@@ -124,7 +124,7 @@ GEM
       activesupport (>= 4.0.1)
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
-    hashie (3.3.2)
+    hashie (3.4.0)
     high_voltage (2.2.1)
     hike (1.2.3)
     hitimes (1.2.2)
@@ -173,7 +173,7 @@ GEM
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
       rack (~> 1.0)
-    omniauth-dice (0.1.9)
+    omniauth-dice (0.2.0)
       cert_munger (~> 0.1)
       dnc (~> 0.1)
       excon (~> 0.43)
@@ -371,7 +371,7 @@ DEPENDENCIES
   neat
   newrelic_rpm
   omniauth
-  omniauth-dice (~> 0.1)
+  omniauth-dice (~> 0.2)
   paranoia (~> 2.0)
   pg
   poltergeist
