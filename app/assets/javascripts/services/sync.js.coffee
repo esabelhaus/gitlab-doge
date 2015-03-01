@@ -1,3 +1,3 @@
 App.factory 'Sync', ['$resource', ($resource) ->
-  $resource '/repo_syncs/:id', {id: '@id'}
+  $resource "#{ENV['RAILS_RELATIVE_ROOT_URL']}/repo_syncs/:id", {id: '@id'}
 ]
