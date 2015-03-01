@@ -4,8 +4,10 @@
     %meta{ content: 'width=device-width,initial-scale=1', name: 'viewport' }
     %title
       = [content_for(:page_title), "Doge"].compact.uniq.join(" | ")
-    = stylesheet_link_tag    'application', :media => 'all'
-    %link{:href => "/favicon.ico", :rel => "shortcut icon"}
+    -if ENV['EXTERNAL_BRANDING'] == "on"
+      %link{:rel => :stylesheet, :type => :"text/css", :href => "#{ENV['BRANDING_PATH']}"}
+    = stylesheet_link_tag 'application', :media => 'all'
+    %link{:href => "#{ENV['RAILS_RELATIVE_ROOT_URL']}/favicon.ico", :rel => "shortcut icon"}
     = javascript_include_tag 'application'
     = csrf_meta_tags
   %body
