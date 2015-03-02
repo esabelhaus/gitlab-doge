@@ -3,6 +3,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :dice, {
     cas_server:          "#{ENV['CAS_SERVER']}",
     authentication_path: "#{ENV['CAS_AUTHENTICATION_PATH']}",
+    use_callback_url:    true,
     primary_visa:        "#{ENV['PRIMARY_VISA_FIELD']}",
     dnc_options: { :transformation => ENV['DNC_TRANSFORMATION'] }, # see `dnc` gem for all options
     ssl_config: {
