@@ -14,7 +14,7 @@ class RepoSynchronization
 
   def start
     user.repos.clear
-    api.projects.each do |resource|
+    api.projects(options={:per_page => 100}).each do |resource|
       attributes = repo_attributes(resource.to_hash)
       user.repos << Repo.find_or_create_with(attributes)
     end
