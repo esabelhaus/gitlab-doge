@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+cd $(dirname $0)/..
+app_root=$(pwd)
+sidekiq_pidfile="$app_root/tmp/pids/sidekiq.pid"
+sidekiq_logfile="$app_root/log/sidekiq.log"
+config_file="$app_root/config/sidekiq.yml"
+user=$(ls -l .env | awk '{print $3}')
+
+function warn
+{
+  echo "$@" 1>&2
+}
+
+function stop
+{
+  bundle exec sidekiqctl stop $sidekiq_pidfile >> $sidekiq_logfile 2>&1
+}
+
+function killall
+{
+  pkill -u $user -f sidekiq
+}
+
+function restart
+{
+  if [ -f $sidekiq_pidfile ]; then
+    stop
+  fi
+  killall
+  start_sidekiq
+}
+
+function start_no_deamonize
+{
+  start_sidekiq
+}
+
+function start_sidekiq
+{
+  bundle exec sidekiq -C $config_file -d -L $sidekiq_logfile -e $RAILS_ENV
+}
+
+function load_ok
+{
+  sidekiq_pid=$(cat $sidekiq_pidfile)
+  if [[ -z $sidekiq_pid ]] ; then
+    warn "Could not find a PID in $sidekiq_pidfile"
+    exit 0
+  fi
+
+  if (ps -p $sidekiq_pid -o args | grep '\([0-9]\+\) of \1 busy' 1>&2) ; then
+    warn "Too many busy Sidekiq workers"
+    exit 1
+  fi
+
+  exit 0
+}
+
+case "$1" in
+  stop)
+    stop
+    ;;
+  start)
+    start_sidekiq
+    ;;
+  start_no_deamonize)
+    start_no_deamonize
+    ;;
+  restart)
+    restart
+    ;;
+  killall)
+    killall
+    ;;
+  load_ok)
+    load_ok
+    ;;
+  *)
+    echo "Usage: RAILS_ENV=your_env $0 {stop|start|start_no_deamonize|restart|killall|load_ok}"
+esac

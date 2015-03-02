@@ -1,3 +1,3 @@
-App.factory 'User', ['$resource', ($resource) ->
-  $resource "#{ENV['RAILS_RELATIVE_ROOT_URL']}/user"
+App.factory 'User', ['$resource', "rails_root", ($resource, rails_root) ->
+  $resource rails_root + "/user"
 ]
