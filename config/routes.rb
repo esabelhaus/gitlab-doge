@@ -1,6 +1,8 @@
 Dogeapp::Application.routes.draw do
   require 'sidekiq/web'
-  mount Sidekiq::Web => "/queue"
+  require 'admin_constraint'
+  mount Sidekiq::Web => '/sidekiq', :constraints => AdminConstraint.new
+  get '/sidekiq', to: "pages#show", id: "access_denied"
 
   match "/auth/:provider/callback", to: "sessions#create", :via => [:get, :post]
   get   '/auth/failure', to: 'sessions#failure'

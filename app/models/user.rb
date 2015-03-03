@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
 
   before_create :generate_remember_token
 
+  def is_admin?
+    admin
+  end
+
   def to_s
     gitlab_username
   end
