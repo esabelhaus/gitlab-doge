@@ -2,8 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  sync_repos: 'Refresh repo list'
-  syncing_repos: 'Loading repos...'
+  sync_repos: 'Sync repos from Gitlab'
+  syncing_repos: 'Syncing repos... Please be patient'
   authenticate: 'Sign In with Casport'
   active_repos: 'Active repos'
   search_placeholder: 'search by repo or organization name'
