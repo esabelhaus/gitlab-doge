@@ -15,14 +15,14 @@ gem "high_voltage"
 gem "jquery-rails", "~> 3.1.1"
 gem "jshintrb", "~> 0.2.4"
 #This is here in the event your exernal gitlab db is mysql
-gem "mysql2", :platforms => :mri
+gem "mysql2", :platforms => :ruby
 gem "activerecord-jdbcmysql-adapter", :platforms => :jruby
 gem "neat", "~> 1.5.1"
 gem "gitlab", "3.2.0"
 gem "omniauth"
 gem "omniauth-dice", "~> 0.2"
 gem "paranoia", "~> 2.0"
-gem "pg", :platforms => :mri
+gem "pg", :platforms => :ruby
 gem "activerecord-jdbcpostgresql-adapter", :platforms => :jruby
 gem "rb-readline"
 gem "rails", "4.1.5"
