@@ -16,12 +16,16 @@ gem "jquery-rails", "~> 3.1.1"
 gem "jshintrb", "~> 0.2.4"
 #This is here in the event your exernal gitlab db is mysql
 gem "activerecord-jdbcmysql-adapter"
+gem "mysql2", :platforms => :ruby
+gem "activerecord-jdbcmysql-adapter", :platforms => :jruby
 gem "neat", "~> 1.5.1"
 gem "gitlab", "3.2.0"
 gem "omniauth"
 gem "omniauth-dice", "~> 0.2"
 gem "paranoia", "~> 2.0"
 gem "activerecord-jdbcpostgresql-adapter"
+gem "pg", :platforms => :ruby
+gem "activerecord-jdbcpostgresql-adapter", :platforms => :jruby
 gem "rb-readline"
 gem "rails", "4.1.5"
 gem "sinatra"
@@ -31,6 +35,8 @@ gem "rubocop", "0.29.1"
 gem "sass-rails", "~> 4.0.2"
 gem "uglifier", ">= 1.0.3"
 gem "dotenv-rails", "~> 0.11.1"
+
+
 
 group :staging, :production do
   gem "rails_12factor"
