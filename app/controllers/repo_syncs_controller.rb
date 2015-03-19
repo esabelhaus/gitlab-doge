@@ -10,6 +10,8 @@ class RepoSyncsController < ApplicationController
         session[:gitlab_token]
       )
       head 201
+    else
+      head 200
     end
   end
 

@@ -6,8 +6,9 @@
   %h2 Configuration
 
   %p
-    Doge uses the
-    #{link_to "thoughtbot style guide", "https://github.com/thoughtbot/guides/tree/master/style"}
+    Doge uses a
+    #{link_to "ruthless and unforgiving configuration", 
+      "#{ENV['SOURCE_URL']}/blob/master/config/style_guides/ruby.yml"}
     by default, unless you configure it to use your own style guide.
 
   %h3 Ruby
@@ -23,9 +24,9 @@
           enabled: true
 
   %p
-    Doge uses #{link_to "RuboCop", "https://github.com/bbatsov/rubocop"}
-    internally so you can configure Doge by adding a
-    #{link_to "RuboCop config", "https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml"}
+    Doge uses RuboCop internally so you can configure Doge by adding a
+    #{link_to "RuboCop config",
+      "#{ENV['SOURCE_URL']}/blob/master/doc/default_rubocop.yml"}
     to your project and adding the following to
     %em.code .hound.yml
     in the root of your project.
@@ -39,6 +40,9 @@
   %h3 CoffeeScript
 
   %p
+    The default doge configuration for CoffeeScript can be found
+    #{link_to "here",
+      "#{ENV['SOURCE_URL']}/blob/master/config/style_guides/coffeescript.json"}
     To enable CoffeeScript style checking, add the following to
     %em.code .hound.yml
     in the root of your project
@@ -49,9 +53,9 @@
           enabled: true
 
   %p
-    Doge uses #{link_to "CoffeeLint", "http://www.coffeelint.org/"}
-    internally so you can configure Doge by adding a
-    #{link_to "CoffeeLint config", "https://github.com/clutchski/coffeelint/blob/master/coffeelint.json"}
+    Doge uses CoffeeLint internally so you can configure Doge by adding a
+    #{link_to "CoffeeLint config",
+      "#{ENV['SOURCE_URL']}/blob/master/doc/coffeelint.json"}
     to your project and adding the following to
     %em.code .hound.yml
     in the root of your project.
@@ -75,9 +79,9 @@
           enabled: true
 
   %p
-    Doge uses #{link_to "JSHint", "https://github.com/jshint/jshint/"}
-    internally so you can configure Doge by adding a
-    #{link_to "JSHint config", "#{ENV['SOURCE_URL']}/blob/master/config/style_guides/javascript.json"}
+    Doge uses JSHint internally so you can configure Doge by adding a
+    #{link_to "JSHint config",
+      "#{ENV['SOURCE_URL']}/blob/master/doc/.jshintrc.json"}
     to your project and adding the following to
     %em.code .hound.yml
     in the root of your project.
