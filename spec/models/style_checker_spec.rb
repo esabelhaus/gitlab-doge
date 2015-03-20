@@ -18,8 +18,11 @@ describe StyleChecker, "#violations" do
     violated_file = stub_commit_file("bad.rb", "def bad( a ); a; end  ")
     merge_request =
       stub_merge_request(merge_request_files: [stylish_file, violated_file])
-    expected_violations =
-      ['Unnecessary spacing detected.', 'Space inside parentheses detected.', 'Trailing whitespace detected.']
+    expected_violations = [
+      'Avoid single-line method definitions.',
+      'Space inside parentheses detected.',
+      'Trailing whitespace detected.'
+    ]
 
     violation_messages = StyleChecker.new(merge_request).violations.
       flat_map(&:messages)
@@ -36,8 +39,7 @@ describe StyleChecker, "#violations" do
         violations = StyleChecker.new(merge_request).violations
         messages = violations.flat_map(&:messages)
 
-        expect(messages).to eq ['Unnecessary spacing detected.',
-                                            'Trailing whitespace detected.']
+        expect(messages).to eq ['Trailing whitespace detected.']
       end
     end
 
