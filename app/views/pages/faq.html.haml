@@ -43,22 +43,21 @@
 
   %h3 Can I have Doge check my entire repository for style?
   %p
-    No, and we don't recommend doing so. Our rule is "Don't rewrite existing
-    code to follow the style guide." See the
-    = link_to('thoughtbot style guide.',
-      'https://github.com/thoughtbot/guides#guides')
+    No, and we don't recommend doing so. It is an easy trap to fall into if
+    you begin correcting styles on an entire project all at once. Doge
+    allows you to focus on the code which is being modified, and enforcing good
+    practices going forward.
   %p
     It can be dangerous to re-write a lot of code for just style reasons. It
     can introduce functional regressions, which are a higher-level concern than
     style.
   %p
-    We believe the right approach is to convert a codebase over time, one pull
+    We believe the right approach is to convert a codebase over time, one merge
     request at a time, to conform to a style guide. Only focus on style in
     diffs and make smaller changes that ideally have tests associated with
     them.
   %p
-    If you'd still like to analyze your whole repo, try using
-    = link_to('Rubocop', 'https://github.com/bbatsov/rubocop')
+    If you'd still like to analyze your whole repo, try using the Rubocop gem
     locally.
 
   %h3 How do I unsubscribe from Doge?
