@@ -6,3 +6,6 @@ AllCops:
     - '**/*/config/**/*'
     - '**/*/script/**/*'
     - '**/*/spec/**/*'
+
+Style/FileName:
+  Enabled: false
