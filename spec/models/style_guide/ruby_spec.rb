@@ -15,7 +15,7 @@ describe StyleGuide::Ruby, "#violations_in_file" do
     describe "for { and } as %r literal delimiters" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-          "test" =~ %r|test|
+          'test' =~ %r{/t/e/s/t/test/}
         CODE
       end
     end
@@ -31,8 +31,14 @@ describe StyleGuide::Ruby, "#violations_in_file" do
     end
 
     describe "for trailing commas" do
-      it "returns no violations" do
-        expect(violations_in(<<-CODE)).to eq []
+      it "returns violations" do
+        violations = [
+          "Avoid comma after the last item of an array.",
+          "Avoid comma after the last parameter of a method call.",
+          "Avoid comma after the last item of a hash."
+        ]
+
+        expect(violations_in(<<-CODE)).to eq violations
           _one = [
             1,
           ]
@@ -47,8 +53,14 @@ describe StyleGuide::Ruby, "#violations_in_file" do
     end
 
     describe "for single line conditional" do
-      it "returns no violations" do
-        expect(violations_in(<<-CODE)).to eq []
+      it "returns violations" do
+        violations = [
+          "Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.",
+          "Favor the ternary operator (?:) over if/then/else/end constructs.",
+          "Favor modifier `while` usage when having a single-line body."
+        ]
+
+        expect(violations_in(<<-CODE)).to eq violations
 if signed_in? then redirect_to dashboard_path end
 
 while signed_in? do something end
@@ -59,8 +71,8 @@ while signed_in? do something end
     describe "for has_* method name" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-def has_something?
-  "something"
+def something?
+  'something'
 end
         CODE
       end
@@ -68,7 +80,10 @@ end
 
     describe "for is_* method name" do
       it "returns violations" do
-        violations = ["Rename `is_something?` to `something?`."]
+        violations = [
+          "Rename `is_something?` to `something?`.",
+          "Prefer single-quoted strings when you don't need string interpolation or special symbols."
+        ]
 
         expect(violations_in(<<-CODE)).to eq violations
 def is_something?
@@ -86,48 +101,10 @@ users.detect(&:active?)
       end
     end
 
-    describe "when using find" do
-      it "returns violations" do
-        violations = ["Prefer `detect` over `find`."]
-
-        expect(violations_in(<<-CODE)).to eq violations
-users.find(&:active?)
-        CODE
-      end
-    end
-
     describe "when using select" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
 users.select(&:active?)
-        CODE
-      end
-    end
-
-    describe "when using find_all" do
-      it "returns violations" do
-        violations = ["Prefer `select` over `find_all`."]
-
-        expect(violations_in(<<-CODE)).to eq violations
-users.find_all(&:active?)
-        CODE
-      end
-    end
-
-    describe "when using map" do
-      it "returns no violations" do
-        expect(violations_in(<<-CODE)).to eq []
-users.map(&:active?)
-        CODE
-      end
-    end
-
-    describe "when using collect" do
-      it "returns violations" do
-        violations = ["Prefer `map` over `collect`."]
-
-        expect(violations_in(<<-CODE)).to eq violations
-users.collect(&:active?)
         CODE
       end
     end
@@ -138,18 +115,6 @@ users.collect(&:active?)
           users.inject(0) do |sum, user|
             sum + user.age
           end
-        CODE
-      end
-    end
-
-    describe "when using reduce" do
-      it "returns violations" do
-        violations = ["Prefer `inject` over `reduce`."]
-
-        expect(violations_in(<<-CODE)).to eq violations
-users.reduce(0) do |_, user|
-  user.age
-end
         CODE
       end
     end
@@ -175,7 +140,7 @@ end
         violations = ["Space inside parentheses detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
-logger( "test")
+logger( 'test')
         CODE
       end
     end
@@ -185,15 +150,17 @@ logger( "test")
         violations = ["Space inside parentheses detected."]
 
         expect(violations_in(<<-CODE)).to eq violations
-logger("test" )
+logger('test' )
         CODE
       end
     end
 
     context "for spaces before ]" do
       it "returns violations" do
-        violations = ["Space inside square brackets detected."]
-
+        violations = [
+          "Space inside square brackets detected.",
+          "Prefer single-quoted strings when you don't need string interpolation or special symbols."
+        ]
         expect(violations_in(<<-CODE)).to eq violations
 a["test" ]
         CODE
@@ -218,21 +185,13 @@ private
       end
     end
 
-    context "for leading dot used for multi-line method chain" do
-      it "returns violations" do
-        violations = ["Place the . on the previous line, together with the "\
-                      "method call receiver."]
-
-        expect(violations_in(<<-CODE)).to eq violations
-one
-  .two
-        CODE
-      end
-    end
-
     context "for tab indentation" do
       it "returns violations" do
-        violations = ["Use 2 (not 1) spaces for indentation.", "Tab detected."]
+        violations = [
+          "Use 2 (not 1) spaces for indentation.",
+          "Prefer single-quoted strings when you don't need string interpolation or special symbols.",
+          "Tab detected."
+        ]
 
         expect(violations_in(<<-CODE)).to eq violations
 def test
@@ -426,7 +385,8 @@ end
       violations = violations_with_config(config)
 
       expect(violations).to eq [
-        "Style/HashSyntax: Use the new Ruby 1.9 hash syntax."
+        "Style/HashSyntax: Use the new Ruby 1.9 hash syntax.",
+        "Style/StringLiterals: Prefer single-quoted strings when you don't need string interpolation or special symbols."
       ]
     end
 
@@ -517,17 +477,6 @@ block do |hoge|
   hoge
 
 end
-        CODE
-      end
-    end
-
-    context "with unnecessary space" do
-      it "returns violations" do
-        violations = ["Unnecessary spacing detected."]
-
-        expect(violations_in(<<-CODE)).to eq violations
-hoge  = "https://github.com/bbatsov/rubocop"
-hoge
         CODE
       end
     end
