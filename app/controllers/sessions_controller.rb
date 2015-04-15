@@ -33,8 +33,7 @@ class SessionsController < ApplicationController
     user = User.create!(
       gitlab_username: gitlab_username,
       email_address: gitlab_email_address,
-      dn: user_dn,
-      gitlab_token: GitlabToken.new(user_dn).token
+      dn: user_dn
     )
     flash[:signed_up] = true
     user

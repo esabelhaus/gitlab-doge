@@ -12,4 +12,8 @@ namespace :admin do
     thisUser.admin = false
     thisUser.save
   end
+
+  task sync_fix: :environment do
+    User.where(refreshing_repos: true).map{|u| u.update_attribute(:refreshing_repos, false)}
+  end
 end
