@@ -4,9 +4,10 @@ class RepoConfig
     "ruby" => "yaml",
     "java_script" => "json",
     "coffee_script" => "json",
+    "java" => "xml"
   }
   HOUND_CONFIG_FILE = ".hound.yml"
-  STYLE_GUIDES = %w(ruby coffee_script java_script)
+  STYLE_GUIDES = %w(ruby coffee_script java_script java)
 
   pattr_initialize :commit
 
@@ -81,6 +82,10 @@ class RepoConfig
       fetch("ignore_file", ".jshintignore")
 
     commit.file_content(ignore_file)
+  end
+
+  def parse_xml(content)
+    content.blank? ? nil : content
   end
 
   def parse_yaml(content)

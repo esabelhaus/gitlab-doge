@@ -8,8 +8,6 @@
     -if ENV['EXTERNAL_BRANDING'] == "yes"
       %link{:rel => :stylesheet, :type => :"text/css", :href => "#{ENV['BRANDING_PATH_1']}"}
       %link{:rel => :stylesheet, :type => :"text/css", :href => "#{ENV['BRANDING_PATH_2']}"}
-    -if ENV['EXTERNAL_JS'] == "yes"
-      %script{:type => :"text/javascript", :src => "#{ENV['JS_PATH']}"}
     = stylesheet_link_tag 'application', :media => 'all'
     %link{:href => "#{ENV['RAILS_RELATIVE_ROOT_URL']}/favicon.ico", :rel => "shortcut icon"}
     = javascript_include_tag 'application'
@@ -22,5 +20,7 @@
     .content
       = yield
 
+    -if ENV['EXTERNAL_JS'] == "yes"
+      %script{:type => :"text/javascript", :src => "#{ENV['JS_PATH']}"}
     = javascript_tag do
       = yield :javascript
