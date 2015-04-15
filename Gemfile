@@ -14,6 +14,7 @@ gem "haml-rails", "~> 0.5.3"
 gem "high_voltage"
 gem "jquery-rails", "~> 3.1.1"
 gem "jshintrb", "~> 0.2.4"
+gem "jlint", "~> 0.1.3" #github: "e-sabelhaus/jlint", ref: "upgrade-checkstyle"
 #This is here in the event your exernal gitlab db is mysql
 gem "mysql2"
 gem "neat", "~> 1.5.1"
