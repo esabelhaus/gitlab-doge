@@ -37,6 +37,40 @@
           enabled: true
           config_file: config/.rubocop.yml
 
+  %h3 Java
+
+  %p
+    The default configuration for java linting can be found
+    = link_to('here',
+      "#{ENV['SOURCE_URL']}/blob/master/config/style_guides/sun_checks.xml")
+    To enable Java linting, add the following to
+    %em.code .hound.yml
+    in the root of your project
+
+    %code.code-block
+      :preserve
+        java:
+          enabled: true
+
+  %p
+    Doge uses Checkstyle internally through the jlint gem which accepts custom
+    configuration in the form of the
+    = link_to('Sun Checks config',
+      "#{ENV['SOURCE_URL']}/blob/master/config/style_guides/sun_checks.xml")
+    or the
+    = link_to('Google Style config',
+      "#{ENV['SOURCE_URL']}/blob/master/doc/google_checks.xml")
+    . Both can be configured to enable or disable checks as needed. To specify
+    a custom config, add the following to
+    %em.code .hound.yml
+    in the root of your project.
+
+    %code.code-block
+      :preserve
+        java:
+          enabled: true
+          config_file: config/google_checks.xml
+
   %h3 CoffeeScript
 
   %p
