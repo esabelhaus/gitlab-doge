@@ -1,7 +1,4 @@
-class GitlabToken < GitlabDataAccessor
-  pattr_initialize :user_dn
-
-  def token
-    GitlabDataAccessor.where(extern_uid: user_dn).first.authentication_token
-  end
+class GitlabToken < ActiveRecord::Base
+  has_many :gitlab_identities
+  has_many :gitlab_users
 end
