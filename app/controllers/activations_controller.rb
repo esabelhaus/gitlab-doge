@@ -22,6 +22,6 @@ class ActivationsController < ApplicationController
   end
 
   def gitlab_token
-    session.fetch(:gitlab_token)
+    current_user.gitlab_token_string
   end
 end

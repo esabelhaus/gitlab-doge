@@ -22,6 +22,7 @@ end
 
 describe Build, 'on create' do
   it 'generates a UUID' do
+    allow(GitlabToken).to receive(:token_by_dn).and_return('gitlabdogetoken')
     build = create(:build)
 
     expect(build.uuid).to be_present

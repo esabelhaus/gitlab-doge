@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe ReposController do
+  before :each do
+    allow(GitlabToken).to receive(:token_by_dn).and_return('gitlabdogetoken')
+  end
   describe "#index" do
     context "when current user is a member of a repo with missing information" do
       it "clears all memberships to allow for a forced reload" do

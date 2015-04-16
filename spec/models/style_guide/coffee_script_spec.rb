@@ -60,21 +60,6 @@ describe StyleGuide::CoffeeScript do
       end
     end
 
-    context "thoughtbot pull request" do
-      it "uses the default thoughtbot configuration" do
-        spy_on_coffee_lint
-        spy_on_file_read
-        config_file = thoughtbot_configuration_file(StyleGuide::CoffeeScript)
-
-        violations_in("var foo = 'bar'")
-
-        expect(File).to have_received(:read).
-          with(config_file)
-        expect(Coffeelint).to have_received(:lint).
-          with(anything, thoughtbot_configuration)
-      end
-    end
-
     context "non-thoughtbot pull request" do
       it "uses the default hound configuration" do
         spy_on_coffee_lint
@@ -105,12 +90,6 @@ describe StyleGuide::CoffeeScript do
 
     def default_configuration
       config_file = default_configuration_file(StyleGuide::CoffeeScript)
-      config = File.read(config_file)
-      JSON.parse(config)
-    end
-
-    def thoughtbot_configuration
-      config_file = thoughtbot_configuration_file(StyleGuide::CoffeeScript)
       config = File.read(config_file)
       JSON.parse(config)
     end

@@ -40,6 +40,7 @@ end
 
 group :development, :test do
   gem "awesome_print"
+  gem "brakeman"
   gem "byebug"
   gem "foreman"
   gem "konacha"
@@ -60,7 +61,7 @@ group :test do
   gem "launchy"
   gem "shoulda-matchers"
   gem "webmock"
-  gem "codeclimate-test-reporter"
   gem "rspec-sidekiq"
   gem "sentry-raven"
+  gem 'simplecov'
 end

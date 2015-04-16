@@ -2,6 +2,9 @@ require 'spec_helper'
 require 'app/jobs/repo_synchronization_job'
 
 describe RepoSynchronizationJob do
+  before :each do
+    allow(GitlabToken).to receive(:token_by_dn).and_return('gitlabdogetoken')
+  end
   describe '.perform' do
     it 'syncs repos and sets refreshing_repos to false' do
       user = create(:user, refreshing_repos: true)

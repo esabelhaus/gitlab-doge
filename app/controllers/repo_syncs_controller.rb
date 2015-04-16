@@ -3,11 +3,11 @@ class RepoSyncsController < ApplicationController
 
   def create
     unless current_user.refreshing_repos?
-      before_enqueue(current_user.id, session[:gitlab_token])
+      before_enqueue(current_user.id)
       JobQueue.push(
         RepoSynchronizationJob,
         current_user.id,
-        session[:gitlab_token]
+        current_user.gitlab_token_string
       )
       head 201
     else
@@ -17,7 +17,7 @@ class RepoSyncsController < ApplicationController
 
   private
 
-  def before_enqueue(user_id, gitlab_token)
+  def before_enqueue(user_id)
     user = User.find(user_id)
     user.update_attribute(:refreshing_repos, true)
   end
