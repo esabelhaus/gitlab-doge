@@ -8,7 +8,6 @@ class GitlabToken < ActiveRecord::Base
   end
 
   def self.token_by_dn(dn)
-    raise "SHOULD NOT BE INSIDE GitlabToken#token_by_dn"
     GitlabUser.where(id: GitlabToken.user(dn)).first.authentication_token
   end
 end
