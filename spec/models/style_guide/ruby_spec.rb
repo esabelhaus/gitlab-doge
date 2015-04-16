@@ -513,55 +513,6 @@ end
     end
   end
 
-  context "thoughtbot organization PR" do
-    pending("thoughtbot config is not implemented in gitlab-doge")
-    # it "uses the thoughtbot configuration for rubocop" do
-    #   spy_on_rubocop_team
-    #   spy_on_rubocop_configuration_loader
-    #   config_file = thoughtbot_configuration_file(StyleGuide::Ruby)
-    #   code = <<-CODE
-    #     private def foo
-    #       bar
-    #     end
-    #   CODE
-    #
-    #   thoughtbot_violations_in(code)
-    #
-    #   expect(RuboCop::ConfigLoader).to have_received(:configuration_from_file).
-    #     with(config_file)
-    #
-    #   expect(RuboCop::Cop::Team).to have_received(:new).
-    #     with(anything, thoughtbot_configuration, anything)
-    # end
-    #
-    # describe "when using reduce" do
-    #   it "returns no violations" do
-    #     expect(thoughtbot_violations_in(<<-CODE)).to eq []
-    #       users.reduce(0) do |sum, user|
-    #         sum + user.age
-    #       end
-    #     CODE
-    #   end
-    # end
-    #
-    # describe "when using inject" do
-    #   it "returns violations" do
-    #     violations = ["Prefer `reduce` over `inject`."]
-    #
-    #     expect(thoughtbot_violations_in(<<-CODE)).to eq violations
-    #       users.inject(0) do |_, user|
-    #         user.age
-    #       end
-    #     CODE
-    #   end
-    # end
-    #
-    # def thoughtbot_violations_in(content)
-    #   violations_in(content, repository_owner_name: "thoughtbot")
-    # end
-  end
-
-
   private
 
   def violations_in(content, config: nil)
@@ -579,11 +530,6 @@ end
     config_file = default_configuration_file(StyleGuide::Ruby)
     RuboCop::ConfigLoader.configuration_from_file(config_file)
   end
-
-  # def thoughtbot_configuration
-  #   config_file = thoughtbot_configuration_file(StyleGuide::Ruby)
-  #   RuboCop::ConfigLoader.configuration_from_file(config_file)
-  # end
 
   def spy_on_rubocop_team
     allow(RuboCop::Cop::Team).to receive(:new).and_call_original

@@ -8,6 +8,17 @@ module ApiHelper
 
   #Gitlab Specific Methods
 
+  def stub_gitlab_user
+    stub_request(
+      :get,
+      "http://example.com/projects/user"
+    ).with(headers: {'Accept'=>'application/json', 'Private-Token'=>'dogegitlabtoken'}).to_return(
+      status: 200,
+      body: File.read('spec/support/fixtures/gitlab_user.json'),
+      headers: { 'Content-Type' => 'application/json; charset=utf-8' }
+    )
+  end
+
   def stub_gitlab_commit(fileName, id)
     stub_request(
       :get,

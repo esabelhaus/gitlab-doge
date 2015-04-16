@@ -3,6 +3,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'fast_spec_helper'
 require 'config/environment'
 require 'rspec/rails'
+require 'simplecov'
+
+SimpleCov.start
 
 ActiveRecord::Migration.maintain_test_schema!
 

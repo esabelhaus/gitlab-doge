@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe Repo do
+  before :each do
+    allow(GitlabToken).to receive(:token_by_dn).and_return('gitlabdogetoken')
+  end
+
   it { should have_many(:users).through(:memberships) }
   it { should have_many :builds }
   it { should validate_presence_of :full_gitlab_name }
