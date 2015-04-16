@@ -1,9 +1,12 @@
 require "spec_helper"
 
 describe ActivationsController, "#create" do
+  before :each do
+    allow(GitlabToken).to receive(:token_by_dn).and_return('gitlabdogetoken')
+  end
   context "when activation succeeds" do
     it "returns successful response" do
-      token = "sometoken"
+      token = "gitlabdogetoken"
       membership = create(:membership)
       repo = membership.repo
       activator = double(:repo_activator, activate: true)
@@ -22,7 +25,7 @@ describe ActivationsController, "#create" do
 
   context "when activation fails" do
     it "returns error response" do
-      token = "sometoken"
+      token = "gitlabdogetoken"
       membership = create(:membership)
       repo = membership.repo
       activator = double(:repo_activator, activate: false).as_null_object

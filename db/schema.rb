@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303141126) do
+ActiveRecord::Schema.define(version: 20150416153905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 20150303141126) do
   add_index "builds", ["merge_request_id", "commit_sha"], name: "index_builds_on_merge_request_id_and_commit_sha", unique: true, using: :btree
   add_index "builds", ["repo_id"], name: "index_builds_on_repo_id", using: :btree
   add_index "builds", ["uuid"], name: "index_builds_on_uuid", unique: true, using: :btree
+
+  create_table "gitlab_identities_gitlab_users", id: false, force: true do |t|
+    t.integer "gitlab_identity_id", null: false
+    t.integer "gitlab_user_id",     null: false
+  end
+
+  add_index "gitlab_identities_gitlab_users", ["gitlab_identity_id", "gitlab_user_id"], name: "gitlab_identity_index", using: :btree
 
   create_table "memberships", force: true do |t|
     t.integer  "user_id",    null: false
@@ -63,15 +70,15 @@ ActiveRecord::Schema.define(version: 20150303141126) do
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "users", force: true do |t|
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.string   "gitlab_username",                  null: false
-    t.string   "remember_token",                   null: false
-    t.boolean  "refreshing_repos", default: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "gitlab_username",                     null: false
+    t.string   "remember_token",                      null: false
+    t.boolean  "refreshing_repos",    default: false
     t.string   "email_address"
     t.string   "dn"
-    t.string   "gitlab_token"
-    t.boolean  "admin",            default: false
+    t.string   "gitlab_token_string"
+    t.boolean  "admin",               default: false
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
