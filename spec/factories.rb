@@ -23,6 +23,7 @@ FactoryGirl.define do
   end
 
   factory :user do
+    dn "getalonglittledogegetalong"
     sequence(:gitlab_username) { |n| "gitlab#{n}" }
 
     ignore do

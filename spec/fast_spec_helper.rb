@@ -6,10 +6,6 @@ require "webmock/rspec"
 require "active_support"
 require "active_support/core_ext"
 require 'rspec-sidekiq'
-#require "codeclimate-test-reporter"
-
-
-#CodeClimate::TestReporter.start
 
 Dir["spec/support/**/*.rb"].each { |f| require f }
 
