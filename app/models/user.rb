@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   # If token isn't valid, retrieve updated token
   # Return the valid token
   def get_current_token
-    Rails.logger.info("foo")
     Gitlab.client(
       endpoint: ENV['GITLAB_ENDPOINT'],
       private_token: read_attribute(:gitlab_token_string)
