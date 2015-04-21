@@ -4,16 +4,16 @@ class MergeRequest
   pattr_initialize :payload
 
   def comments
-    @comments ||= api.merge_request_comments(gitlab_repo_id, merge_request_id)
+    @comments = api.merge_request_comments(gitlab_repo_id, merge_request_id)
   end
 
   def merge_request_files
-    @merge_request_files ||= merge_request_diffs.map { |diff| build_commit_file(diff) }
+    @merge_request_files = merge_request_diffs.map { |diff| build_commit_file(diff) }
   end
 
   def comment_on_violation(violation)
     comment_on_merge_request(violation)
-    # comment_on_commit(violation)
+    comment_on_commit(violation)
   end
 
   def opened?
@@ -25,7 +25,7 @@ class MergeRequest
   end
 
   def head_sha
-    @head_sha ||= api.commit(gitlab_repo_id, source_branch).id
+    @head_sha = api.commit(gitlab_repo_id, source_branch).id
   end
 
   private
@@ -72,13 +72,13 @@ class MergeRequest
   end
 
   def merge_request_diffs
-    @merge_request_diffs ||= compare.diffs.reject{ |d|
+    @merge_request_diffs = compare.diffs.reject{ |d|
         d["deleted_file"]
       }.map { |d| Hashie::Mash.new(:filename => d["new_path"], :patch => d["diff"]) }
   end
 
   def compare
-    @compare ||= api.compare(gitlab_repo_id, target_branch, source_branch)
+    @compare = api.compare(gitlab_repo_id, target_branch, source_branch)
   end
 
   delegate :gitlab_repo_id, :full_repo_name, :merge_request_id, :state, :source_branch, :target_branch, :to => :payload

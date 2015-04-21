@@ -6,7 +6,7 @@ class CommitFile
   end
 
   def content
-    @content ||= begin
+    @content = begin
       commit.file_content(filename)
     end
   end
