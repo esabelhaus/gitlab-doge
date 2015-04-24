@@ -18,7 +18,7 @@ gem "jlint", "~> 0.1.3" #github: "e-sabelhaus/jlint", ref: "upgrade-checkstyle"
 #This is here in the event your exernal gitlab db is mysql
 gem "mysql2"
 gem "neat", "~> 1.5.1"
-gem "gitlab", "3.2.0"
+gem "gitlab", "3.4.0"
 gem "omniauth"
 gem "omniauth-dice", "~> 0.2"
 gem "paranoia", "~> 2.0"
