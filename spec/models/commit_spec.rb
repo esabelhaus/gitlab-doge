@@ -11,7 +11,9 @@ describe Commit do
         stub_gitlab_commit("1.json", 1)
         commit = Commit.new(1, "master", gitlab_api)
 
-        expect(commit.file_content("1.json")).to eq "some content"
+        sample = %Q[{"1"=>"some content"}]
+
+        expect(commit.file_content("1.json")).to eq sample
       end
     end
 
