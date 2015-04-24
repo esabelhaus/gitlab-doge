@@ -15,16 +15,19 @@ module StyleGuide
     end
 
     def default_config
-      repo_config.for(default_config_file)
+      File.read(default_config_file)
     end
 
     def team
-      if custom_config.nil?
-        lint = Jlint.new(custom_config)
+      if custom_config.blank?
+        @team ||= Jlint.new(default_config)
       else
-        lint = Jlint.new(default_config)
+        @team ||= Jlint.new(custom_config)
       end
-      @team ||= lint
+    rescue
+      Sidekiq.logger.info "An error was found in the custom config"
+      Sidekiq.logger.info "Dropping into the default config"
+      @team ||= Jlint.new(default_config)
     end
 
     def default_config_file
