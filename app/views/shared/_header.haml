@@ -3,10 +3,15 @@
     %h1.logo gitlab-doge
   - if signed_in?
     %ul.nav
-      %li= link_to 'Your Repos', repos_path, class: 'repo-link'
       %li= link_to 'Configure Doge', configuration_path
       %li= link_to 'FAQ', faq_path
-      %li
-      = link_to sign_out_path do
-        %i{:class => "fa fa-sign-out"}
-
+      %li.dropdown
+        %input#account-menu-toggle{type: 'checkbox'}
+        %label.toggle{for: 'account-menu-toggle'} #{current_user}
+        .menu
+          %a{ href: repos_path, class: 'repo-link' }
+            %i.fa.fa-list
+            your repos
+          %a{ href: sign_out_path }
+            %i.fa.fa-sign-out
+            Sign out

@@ -21,7 +21,9 @@ $icon-font: "FontAwesome";
 $icon-dropdown: '\f0d7';
 $icon-dropup: '\f0d8';
 $icon-lock: '\f023';
+$icon-sign-out: '\f08b';
+$icon-list: '\f03a';
 
-$small-screen: new-breakpoint(max-width em(600) 2);
-$medium-screen: new-breakpoint(max-width em(800) 4);
+$small-screen: new-breakpoint(max-width em(800) 2);
+$medium-screen: new-breakpoint(max-width em(1000) 4);
 $large-screen: new-breakpoint(max-width em(1200) 8);
