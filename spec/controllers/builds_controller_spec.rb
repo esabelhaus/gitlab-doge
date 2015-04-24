@@ -26,7 +26,7 @@ describe BuildsController, '#create' do
         'spec/support/fixtures/merge_request_event.json'
       )
 
-      payload = { payload: payload_data, controller: "builds", action: "create" }
+      payload = { payload: payload_data }
 
       post(:create, payload: payload_data)
 

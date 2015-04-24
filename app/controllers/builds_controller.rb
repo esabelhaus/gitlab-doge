@@ -18,6 +18,6 @@ class BuildsController < ApplicationController
   end
 
   def payload
-    @payload ||= Payload.new(params)
+    @payload ||= Payload.new(params.except(:controller, :action))
   end
 end
