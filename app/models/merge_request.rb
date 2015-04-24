@@ -47,12 +47,7 @@ class MergeRequest
     api.create_merge_request_comment(
       gitlab_repo_id,
       merge_request_id,
-      comment_note(violation),
-      {
-        :line      => violation.patch_position,
-        :file_path => violation.filename,
-        :line_type => 'new'
-      }
+      comment_note(violation)
     )
   end
 
