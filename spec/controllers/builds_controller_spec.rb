@@ -26,10 +26,12 @@ describe BuildsController, '#create' do
         'spec/support/fixtures/merge_request_event.json'
       )
 
+      payload = { payload: payload_data, controller: "builds", action: "create" }
+
       post(:create, payload: payload_data)
 
       expect(JobQueue).to have_received(:push).with(
-        LargeBuildJob, payload_data
+        LargeBuildJob, payload
       )
     end
   end
