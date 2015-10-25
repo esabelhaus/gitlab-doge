@@ -15,7 +15,7 @@ describe StyleGuide::Ruby, "#violations_in_file" do
     describe "for { and } as %r literal delimiters" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-          'test' =~ %r{/t/e/s/t/test/}
+'test' =~ %r{/t/e/s/t/test/}
         CODE
       end
     end
@@ -23,9 +23,9 @@ describe StyleGuide::Ruby, "#violations_in_file" do
     describe "for private prefix" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-          private def foo
-            bar
-          end
+private def foo
+  bar
+end
         CODE
       end
     end
@@ -39,15 +39,15 @@ describe StyleGuide::Ruby, "#violations_in_file" do
         ]
 
         expect(violations_in(<<-CODE)).to eq violations
-          _one = [
-            1,
-          ]
-          _two(
-            1,
-          )
-          _three = {
-            one: 1,
-          }
+_one = [
+  1,
+]
+_two(
+  1,
+)
+_three = {
+  one: 1,
+}
         CODE
       end
     end
@@ -56,7 +56,6 @@ describe StyleGuide::Ruby, "#violations_in_file" do
       it "returns violations" do
         violations = [
           "Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.",
-          "Favor the ternary operator (?:) over if/then/else/end constructs.",
           "Favor modifier `while` usage when having a single-line body."
         ]
 
@@ -112,9 +111,9 @@ users.select(&:active?)
     describe "when using inject" do
       it "returns no violations" do
         expect(violations_in(<<-CODE)).to eq []
-          users.inject(0) do |sum, user|
-            sum + user.age
-          end
+users.inject(0) do |sum, user|
+  sum + user.age
+end
         CODE
       end
     end
@@ -203,7 +202,7 @@ end
 
     context "for two methods without newline separation" do
       it "returns violations" do
-        violations = ["Use empty lines between defs."]
+        violations = ["Use empty lines between method definitions."]
 
         expect(violations_in(<<-CODE)).to eq violations
 def one
