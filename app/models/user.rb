@@ -1,4 +1,3 @@
-require 'gitlab_monkey_patch'
 class User < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   has_many :memberships
@@ -43,7 +42,6 @@ class User < ActiveRecord::Base
       endpoint: ENV['GITLAB_ENDPOINT'],
       private_token: read_attribute(:gitlab_token_string)
     ).user # Invoke a call to the API to ensure we raise if token is invalid
-    Rails.logger.info("bar")
     return read_attribute(:gitlab_token_string)
   rescue
     logger.info "Gitlab token expired, updating Gitlab API token"

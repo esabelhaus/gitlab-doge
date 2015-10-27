@@ -1,5 +1,12 @@
-class GitlabUser < ActiveRecord::Base
-  self.table_name = "users"
-  establish_connection :gitlab
-  has_many :gitlab_identities
+require 'gitlab_monkey_patch'
+class CasGitlabUser < User
+  has_one :cas_gitlab_token
+
+  def set_token
+    gitlab_token_string = token
+  end
+
+  def token
+    GitlabToken.token_by_dn(dn)
+  end
 end
