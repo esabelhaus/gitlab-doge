@@ -1,9 +1,9 @@
 gitlab-doge
 =====
 
-[![Build Status](https://travis-ci.org/e-sabelhaus/gitlab-doge.svg?branch=master)](http://travis-ci.org/e-sabelhaus/gitlab-doge?branch=master)
-[![Dependency Status](https://gemnasium.com/e-sabelhaus/gitlab-doge.svg)](https://gemnasium.com/e-sabelhaus/gitlab-doge)
-[![Code Climate](https://codeclimate.com/github/e-sabelhaus/gitlab-doge.png)](https://codeclimate.com/github/e-sabelhaus/gitlab-doge)
+[![Build Status](https://travis-ci.org/esabelhaus/gitlab-doge.svg?branch=master)](http://travis-ci.org/esabelhaus/gitlab-doge?branch=master)
+[![Dependency Status](https://gemnasium.com/esabelhaus/gitlab-doge.svg)](https://gemnasium.com/esabelhaus/gitlab-doge)
+[![Code Climate](https://codeclimate.com/github/esabelhaus/gitlab-doge.png)](https://codeclimate.com/github/esabelhaus/gitlab-doge)
 
 This project is originally a fork of [Hound](https://github.com/thoughtbot/hound) by thoughtbot, and once more
 from [larrylv/hound-gitlab](https://github.com/larrylv/hound-gitlab).
