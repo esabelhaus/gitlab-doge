@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.1.6"
 
-gem "active_model_serializers", "~>0.8.1"
+gem "active_model_serializers", "~> 0.10.3"
 gem 'activerecord-session_store'
 gem "angularjs-rails", "~> 1.2.22"
 gem "attr_extras", "~> 3.1.0"
@@ -24,11 +24,12 @@ gem "omniauth-dice", "~> 0.2"
 gem "paranoia", "~> 2.0"
 gem "pg", "~> 0.17.1"
 gem "rb-readline"
-gem "rails", "~> 4.1.11"
+gem 'responders', '~> 2.0'
+gem "rails", "~> 4.2.7"
 gem "sinatra"
 gem "sidekiq", "~> 3.5.1"
 gem "sidekiq-failures", "~> 0.4.3"
-gem "rubocop", "~> 0.34.2"
+gem "rubocop", "~> 0.35.0"
 gem "sass-rails", "~> 4.0.2"
 gem "uglifier", ">= 1.0.3"
 gem "unicorn", "~> 4.8.3"
