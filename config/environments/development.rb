@@ -20,6 +20,8 @@ Dogeapp::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
+  config.web_console.development_only = false
+
   # Expands the lines which load the assets
   config.assets.debug = true
 end
