@@ -39,6 +39,10 @@ group :staging, :production do
   gem "rails_12factor"
 end
 
+group :development do
+  gem "web-console"
+end
+
 group :development, :test do
   gem "awesome_print"
   gem "brakeman"
@@ -50,12 +54,11 @@ group :development, :test do
   gem "quiet_assets"
   gem "pry"
   gem "pry-rails"
-  gem "web-console"
   gem "thin"
 end
 
 group :test do
-  gem "capybara", "~> 2.4.0"
+  gem "capybara", "~> 2.11.0"
   gem "capybara-webkit"
   gem "database_cleaner"
   gem "factory_girl_rails"
