@@ -40,7 +40,7 @@ describe StyleGuide::CoffeeScript do
         it "returns violation" do
           result = violations_in("class strange_ClassNAME")
 
-          expect(result).to be_any { |m| m =~ /camel cased/ }
+          expect(result).to be_any { |m| m =~ /UpperCamelCased/ }
         end
       end
     end

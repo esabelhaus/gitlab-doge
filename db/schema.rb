@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20150416153905) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "builds", force: true do |t|
+  create_table "builds", force: :cascade do |t|
     t.text     "violations"
     t.integer  "repo_id"
     t.datetime "created_at",       null: false
@@ -30,14 +30,14 @@ ActiveRecord::Schema.define(version: 20150416153905) do
   add_index "builds", ["repo_id"], name: "index_builds_on_repo_id", using: :btree
   add_index "builds", ["uuid"], name: "index_builds_on_uuid", unique: true, using: :btree
 
-  create_table "gitlab_identities_gitlab_users", id: false, force: true do |t|
+  create_table "gitlab_identities_users", id: false, force: :cascade do |t|
     t.integer "gitlab_identity_id", null: false
     t.integer "gitlab_user_id",     null: false
   end
 
-  add_index "gitlab_identities_gitlab_users", ["gitlab_identity_id", "gitlab_user_id"], name: "gitlab_identity_index", using: :btree
+  add_index "gitlab_identities_users", ["gitlab_identity_id", "gitlab_user_id"], name: "gitlab_identity_index", using: :btree
 
-  create_table "memberships", force: true do |t|
+  create_table "memberships", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "repo_id",    null: false
     t.datetime "created_at"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150416153905) do
 
   add_index "memberships", ["repo_id", "user_id"], name: "index_memberships_on_repo_id_and_user_id", using: :btree
 
-  create_table "repos", force: true do |t|
+  create_table "repos", force: :cascade do |t|
     t.integer  "gitlab_id",                        null: false
     t.boolean  "active",           default: false, null: false
     t.integer  "hook_id"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20150416153905) do
   add_index "repos", ["active"], name: "index_repos_on_active", using: :btree
   add_index "repos", ["gitlab_id"], name: "index_repos_on_gitlab_id", using: :btree
 
-  create_table "sessions", force: true do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false
     t.text     "data"
     t.datetime "created_at"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20150416153905) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "gitlab_username",                     null: false
