@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.1.6"
 
-gem "active_model_serializers", "~> 0.10.3"
+gem "active_model_serializers"
 gem 'activerecord-session_store'
 gem "angularjs-rails", "~> 1.6.1"
 gem "attr_extras", "~> 5.1.0"
