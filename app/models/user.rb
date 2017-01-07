@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
     gitlab_username
   end
 
-  def github_repo(github_id)
-    repos.where(github_id: github_id).first
+  def github_repo(gitlab_id)
+    repos.where(gitlab_id: gitlab_id).first
   end
 
   def create_github_repo(attributes)

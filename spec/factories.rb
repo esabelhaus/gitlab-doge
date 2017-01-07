@@ -26,6 +26,9 @@ FactoryGirl.define do
     dn "getalonglittledogegetalong"
     sequence(:gitlab_username) { |n| "gitlab#{n}" }
 
+    trait(:refreshing) { refreshing_repos true }
+    trait(:not_refreshing) { refreshing_repos false }
+
     ignore do
       repos []
     end
