@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe BuildsController, '#create' do
-  #pending("need to rewrite stubs for gitlab api")
   context 'when https is enabled' do
     context 'and http is used' do
       it 'does not redirect' do

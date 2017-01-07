@@ -7,7 +7,7 @@ feature 'User authentication' do
   #   user = create(:user)
   #   stub_repo_requests(token)
   #
-  #   sign_in_as(user)
+  #   sign_in
   #
   #   expect(page).to have_content user.gitlab_username
   # end
@@ -18,7 +18,7 @@ feature 'User authentication' do
   #   user = build(:user, gitlab_username: gitlab_username)
   #   stub_repo_requests(token)
   #
-  #   sign_in_as(user, token)
+  #   sign_in
   #
   #   expect(page).to have_content(gitlab_username)
   # end
@@ -28,7 +28,7 @@ feature 'User authentication' do
   #   user = create(:user)
   #   stub_repo_requests(token)
   #
-  #   sign_in_as(user, token)
+  #   sign_in
   #   find('a[href="/sign_out"]').click
   #
   #   expect(page).not_to have_content user.gitlab_username

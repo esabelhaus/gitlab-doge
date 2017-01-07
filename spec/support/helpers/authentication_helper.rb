@@ -4,13 +4,8 @@ module AuthenticationHelper
     session[:gitlab_token] = token
   end
 
-  def sign_in_as(user, token = doge_token)
-    stub_oauth(
-      nickname: user.gitlab_username,
-      email: user.email_address,
-      token: token
-    )
+  def sign_in
+    mock_dice
     visit root_path
-    click_link(I18n.t('authenticate'), match: :first)
   end
 end
